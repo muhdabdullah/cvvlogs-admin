@@ -1,0 +1,50 @@
+.job-detail {
+  color: var(--grey);
+}
+.job-detail h1,
+h2,
+p,
+div {
+  padding: 0;
+  margin: 0;
+}
+.job-detail h1 {
+  font-size: 40px;
+}
+.job-detail .action-btns .btn {
+  background-color: var(--light-purple);
+  color: var(--purple);
+  border-radius: 20px;
+  text-align: center;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.job-features p {
+  font-size: 14px;
+  font-weight: bold;
+}
+.job-features h2 {
+  font-size: 16px;
+}
+.job-features i {
+  background-color: var(--light-purple);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: var(--purple);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+.job-description h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.job-description .btn {
+  background-color: var(--light-purple);
+  color: var(--purple);
+  border-radius: 20px;
+  text-align: center;
+}

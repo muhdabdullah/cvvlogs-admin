@@ -1,0 +1,99 @@
+.head h2 {
+  font-size: 30px;
+  color: var(--grey);
+  margin: 0;
+}
+.head p {
+  font-size: 16px;
+  color: var(--light-grey);
+  margin: 0;
+}
+.search-input {
+  color: var(--white);
+  background-color: var(--light-purple);
+  border: none;
+  outline: none;
+  width: 100%;
+  min-height: 40px;
+  border-radius: 10px;
+  padding: 10px;
+}
+.search-input::placeholder {
+  color: var(--white);
+}
+.filter-btn-container button {
+  background-color: var(--white);
+  border: none;
+  outline: none;
+  min-width: 150px;
+  border-radius: 10px;
+  color: var(--grey);
+}
+.filter-btn-container button.active {
+  background-color: var(--purple);
+  color: var(--white);
+}
+.filter-btn-container button:hover {
+  background-color: var(--purple);
+  color: var(--white);
+}
+.job-list {
+  background-color: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+  min-height: 100px;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 40px;
+  margin: 10px 0;
+}
+.job-list span {
+  margin-left: 20px;
+}
+.job-list span h2 {
+  font-size: 20px;
+  color: var(--grey);
+  margin: 0;
+}
+.job-list span h2.status {
+  color: var(--purple);
+}
+.job-list span p {
+  font-size: 14px;
+  color: var(--grey);
+  margin: 0;
+}
+.job-list .fa-industry {
+  background-color: var(--light-purple);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: var(--purple);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+.job-list a {
+  background-color: var(--light-purple);
+  border: none;
+  outline: none;
+  min-width: 100px;
+  border-radius: 20px;
+  color: var(--purple);
+}
+.job-list a:hover {
+  background-color: var(--light-purple);
+  color: var(--purple);
+}
+.pagination {
+  background-color: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+}
+.pagination .btn.active {
+  border: 1px solid var(--grey);
+}

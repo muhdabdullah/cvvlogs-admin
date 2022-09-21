@@ -1,0 +1,18 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --purple: #865ddd;
+  --light-purple: #e2d8f7;
+  --grey: #707070;
+  --light-grey: #c8c8c8;
+  --bg-color: #f1f1f1;
+  --white: #ffffff;
+}
+body {
+  background-color: var(--bg-color);
+}

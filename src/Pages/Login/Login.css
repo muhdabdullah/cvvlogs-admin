@@ -1,0 +1,101 @@
+@media only screen and (max-width: 992px) {
+  .login-image-container {
+    display: none;
+  }
+}
+
+.login-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 8px;
+}
+.main-login-form {
+  background-color: #ffff;
+  border-radius: 10px;
+  margin-top: 100px;
+}
+.logo {
+  width: 150px;
+}
+.heading {
+  color: var(--grey);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.recr-login-head {
+  color: var(--purple);
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+}
+
+.recr-login-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #c8c8c8;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  color: black;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.recr-login-label {
+  color: var(--grey);
+}
+
+.forget-pass-login {
+  font-size: 16px;
+  color: var(--purple);
+}
+
+.login-recr-btn {
+  color: #fff !important;
+  background-color: var(--purple) !important;
+  font-weight: bold !important;
+  border: 0;
+  width: 250px;
+}
+
+.login-recr-btn:hover {
+  background-color: var(--purple) !important;
+}
+
+.login-recr-btn:focus {
+  background-color: var(--purple) !important;
+}
+
+.login-recr-btn:active {
+  background-color: var(--purple) !important;
+}
+
+.horizon-rule-reg {
+  border: 1px solid var(--light-grey);
+}
+
+.icon-radius-reg {
+  border-radius: 40%;
+  cursor: pointer;
+}
+
+.dont-account-login {
+  font-size: 14px;
+  text-align: center;
+  color: black;
+}
+
+.reg-here-login {
+  color: var(--purple);
+  font-weight: bold;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+  border-color: none !important;
+  color: black !important;
+}

@@ -1,0 +1,27 @@
+:root {
+  --purple: #865ddd;
+  --yellow: #ffb44a;
+  --grey: #707070;
+  --light-grey: #c8c8c8;
+}
+.company-profile-parent .action-btns .btn {
+  background-color: var(--light-purple);
+  color: var(--purple);
+  border-radius: 20px;
+  text-align: center;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  min-width: 100px;
+}
+.box .shadow h2,
+.box .shadow h5,
+.box .shadow p {
+  color: var(--grey);
+}
+.box .shadow {
+  min-height: 100px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
