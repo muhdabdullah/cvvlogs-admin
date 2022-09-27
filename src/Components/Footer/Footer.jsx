@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import GooglePlay from "../../Assests/footer/store_google.png";
-import AppStore from "../../Assests/footer/store_apple.png";
+import GooglePlay from "../../Assests/footer/google-play.svg";
+import AppStore from "../../Assests/footer/app-store.svg";
 import "./Footer.css";
 import { Link } from "react-router-dom";
 
