@@ -67,7 +67,14 @@ function Dashboard(props) {
                                 <h5>Total Users</h5>
                             </div>
                             <div className="card-body" style={{height: '150px',}}>
-                                <p>Card Content</p>
+                                <div style={{display: 'flex', "flex-direction": 'column', "justify-content": 'space-between'}}>
+                                    <div className="row justify-content-between">
+                                        <h1><bold>1.8K</bold></h1>
+                                    </div>
+                                    <div className="row" style={{display: 'flex', "justify-content": 'flex-end'}}>
+                                        <i className="fa fa-user dashboard-card-icon"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
