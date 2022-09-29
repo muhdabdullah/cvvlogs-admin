@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, BrowserRouter} from "react-router-dom";
 import firebase from "./helpers/firebase";
 import "./style.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
@@ -11,8 +11,112 @@ import CompanyProfile from "./Pages/CompanyProfile/CompanyProfile";
 import PostedJobsDesc from "./Pages/PostedJobsDesc/PostedJobsDesc";
 import EditJob from "./Pages/CreateAJob/editjob";
 import Applicants from "./Pages/Applicants/Applicants";
+import Dashboard from "./Pages/Dashboard/dashboard";
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
+
+// Material Imports
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiDrawer from '@mui/material/Drawer';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import Logo from "./Assests/navbar/logo.png";
+import {background} from "quill/ui/icons";
+
+
+const drawerWidth = 240;
+
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+});
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+      width: drawerWidth,
+      flexShrink: 0,
+      whiteSpace: 'nowrap',
+      boxSizing: 'border-box',
+      ...(open && {
+        ...openedMixin(theme),
+        '& .MuiDrawer-paper': openedMixin(theme),
+      }),
+      ...(!open && {
+        ...closedMixin(theme),
+        '& .MuiDrawer-paper': closedMixin(theme),
+      }),
+    }),
+);
 
 function App() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     if (firebase.messaging.isSupported()) {
       const msg = firebase.messaging();
@@ -32,26 +136,146 @@ function App() {
     }
   });
   return (
-    <>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={Login} />
-          <PrivateRoute path="/dashboard" exact component={Home} />
-          <PrivateRoute
-            path="/recruiterProfile/:id"
-            exact
-            component={CompanyProfile}
-          />
-          <PrivateRoute
-            path="/jobDetail/:id"
-            exact
-            component={PostedJobsDesc}
-          />
-          <PrivateRoute path="/editJob/:id" exact component={EditJob} />
-          <PrivateRoute path="/applicants/:id" exact component={Applicants} />
-        </Switch>
-      </Router>
-    </>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={open}>
+          <Toolbar className="navbar navbar-expand-lg navbar-light bg-white shadow">
+            <IconButton
+                style={{
+                  background: "#FCA120",
+                  color: "#fff",
+                  fontSize: "12px",
+                }}
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: 5,
+                  ...(open && { display: 'none' }),
+                }}
+            >
+              <MenuIcon />
+            </IconButton>
+            {/*<Typography variant="h6" noWrap component="div">*/}
+            {/*  Mini variant drawer*/}
+            {/*</Typography>*/}
+            <img src={Logo} height="50px" />
+            <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%',}}>
+              <div className="col-xs-3">
+                <div className="btn-group">
+                  <button
+                      type="button"
+                      className="btn dropdown-toggle p-0 py-2 px-3"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      id="btn-nav-user"
+                      style={{ fontSize: "16px", borderRadius: "10px" }}
+                  >
+                    <i className="far fa-user pr-2"></i>
+                    {localStorage.getItem("name")}
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li
+                        style={{
+                          fontSize: "16px",
+                          color: "#707070",
+                          cursor: "pointer",
+                        }}
+                    >
+                      <a
+                          className="dropdown-item"
+                      >
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose} style={{color: 'var(--purple)',}}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            <BrowserRouter>
+              <Link to="/dashboard">
+                <ListItem key={'Dashboard'} disablePadding sx={{ display: 'block' }}>
+                  <ListItemButton
+                      sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                      }}
+                  >
+                    <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          mr: open ? 3 : 'auto',
+                          justifyContent: 'center',
+                        }}
+                    >
+                      <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'Dashboard'} sx={{ opacity: open ? 1 : 0 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </BrowserRouter>
+            <BrowserRouter>
+              <Link to="/jobs">
+                <ListItem key={'Job Search'} disablePadding sx={{ display: 'block' }}>
+                  <ListItemButton
+                      sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                      }}
+                  >
+                    <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          mr: open ? 3 : 'auto',
+                          justifyContent: 'center',
+                        }}
+                    >
+                      <MailIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'Job Search'} sx={{ opacity: open ? 1 : 0 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </BrowserRouter>
+          </List>
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, p: 1, marginTop: 8, }}>
+          <>
+            <Router>
+              <Switch>
+                <Route path="/" exact component={Login} />
+                <PrivateRoute path="/jobs" exact component={Home} />
+                <PrivateRoute path="/dashboard" exact component={Dashboard} />
+                <PrivateRoute
+                    path="/recruiterProfile/:id"
+                    exact
+                    component={CompanyProfile}
+                />
+                <PrivateRoute
+                    path="/jobDetail/:id"
+                    exact
+                    component={PostedJobsDesc}
+                />
+                <PrivateRoute path="/editJob/:id" exact component={EditJob} />
+                <PrivateRoute path="/applicants/:id" exact component={Applicants} />
+              </Switch>
+            </Router>
+          </>
+        </Box>
+      </Box>
   );
 }
 

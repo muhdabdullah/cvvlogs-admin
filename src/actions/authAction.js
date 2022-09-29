@@ -28,7 +28,7 @@ export const SignIn = (username, password) => {
           });
           localStorage.setItem("auth_id", auth_id);
           localStorage.setItem("name", username);
-          window.location = "/dashboard";
+          window.location = "/jobs";
         } else {
           alert(response.message);
         }

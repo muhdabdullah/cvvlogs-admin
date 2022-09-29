@@ -8,8 +8,11 @@ import { getDeleteJob } from "../../actions/deleteJobAction";
 import FullPageLoader from "../../Components/fullpageloader/fullPageLoader";
 import placeholder from "../../Assests/placeholder.png";
 import { Link } from "react-router-dom";
+import Pagination from '@mui/material/Pagination';
+import { makeStyles } from "@material-ui/core/styles";
 
 function Home(props) {
+  const [page, setPage] = React.useState(1);
   const [jobsListing, setJobsListing] = useState([]);
   const [jobsLength, setJobsLength] = useState(0);
   const [status, setStatus] = useState(undefined);
@@ -17,6 +20,16 @@ function Home(props) {
   const [nextPage, setNext_page] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  const useStyles = makeStyles(() => ({
+    ul: {
+      "& .MuiPaginationItem-root": {
+        color: "var(--purple)"
+      }
+    }
+  }));
+
+  const classes = useStyles();
 
   useEffect(() => {
     dashboardData(1, status);
@@ -42,13 +55,17 @@ function Home(props) {
     await props.getDashboard(page, admin_status);
     return null;
   };
+  const handleChange = (event, value) => {
+    setPage(value);
+    dashboardData(value, status);
+  };
   if (loading == false) {
     return <FullPageLoader />;
   }
   return (
     <>
-      <Nav2 />
-      <div className="container">
+      {/*<Nav2 />*/}
+      <div className="container-fluid">
         <div className="row">
           <div className="col-12 mt-4">
             <div className="row head">
@@ -134,28 +151,31 @@ function Home(props) {
             )}
           </div>
           {jobsListing.length > 0 ? (
-            <div className="col-12 mb-4 pagination py-2 d-flex align-items-center justify-content-center flex-wrap">
-              {nextPage - 2 ? <button className="btn">{"<"}</button> : ""}
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (x, i) => (
-                  <button
-                    key={i}
-                    className={`btn ${nextPage - 1 == x ? "active" : ""}`}
-                    onClick={() => dashboardData(x, status)}
-                  >
-                    {x}
-                  </button>
-                )
-              )}
-              {isMoreData ? (
-                <button
-                  className="btn"
-                  onClick={() => dashboardData(nextPage, status)}
-                >
-                  {">"}
-                </button>
-              ) : null}
-            </div>
+                  <div className="col-12 mb-4 pagination py-2 d-flex align-items-center justify-content-center flex-wrap">
+                    <Pagination count={totalPages} page={page} classes={{ ul: classes.ul }} onChange={handleChange} />
+                  </div>
+            // <div className="col-12 mb-4 pagination py-2 d-flex align-items-center justify-content-center flex-wrap">
+            //   {nextPage - 2 ? <button className="btn">{"<"}</button> : ""}
+            //   {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+            //     (x, i) => (
+            //       <button
+            //         key={i}
+            //         className={`btn ${nextPage - 1 == x ? "active" : ""}`}
+            //         onClick={() => dashboardData(x, status)}
+            //       >
+            //         {x}
+            //       </button>
+            //     )
+            //   )}
+            //   {isMoreData ? (
+            //     <button
+            //       className="btn"
+            //       onClick={() => dashboardData(nextPage, status)}
+            //     >
+            //       {">"}
+            //     </button>
+            //   ) : null}
+            // </div>
           ) : null}
         </div>
       </div>

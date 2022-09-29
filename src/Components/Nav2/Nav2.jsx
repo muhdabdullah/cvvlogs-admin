@@ -58,7 +58,7 @@ function Nav2(props) {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow">
-      <div className="container">
+      <div className="container-fluid">
         <Link to="/dashboard">
           <img src={Logo} height="50px" />
         </Link>
