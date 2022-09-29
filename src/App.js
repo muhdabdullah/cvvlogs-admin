@@ -196,60 +196,58 @@ function App() {
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
-            <IconButton onClick={handleDrawerClose} style={{color: 'var(--purple)',}}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
+              <div className="navbar navbar-expand-lg navbar-light bg-white shadow" style={{background: '#FCA120',}}>
+                  <IconButton onClick={handleDrawerClose} style={{color: 'var(--purple)',}}>
+                      {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                  </IconButton>
+              </div>
           </DrawerHeader>
-          <Divider />
+          {/*<Divider />*/}
           <List>
-            <BrowserRouter>
-              <Link to="/dashboard">
-                <ListItem key={'Dashboard'} disablePadding sx={{ display: 'block' }}>
+              <ListItem key={'Dashboard'} disablePadding sx={{ display: 'block' }}>
                   <ListItemButton
                       sx={{
-                        minHeight: 48,
-                        justifyContent: open ? 'initial' : 'center',
-                        px: 2.5,
+                          minHeight: 48,
+                          justifyContent: open ? 'initial' : 'center',
+                          px: 2.5,
                       }}
+                      onClick={() => window.location = '/dashboard'}
                   >
-                    <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : 'auto',
-                          justifyContent: 'center',
-                        }}
-                    >
-                      <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={'Dashboard'} sx={{ opacity: open ? 1 : 0 }} />
+                      <ListItemIcon
+                          sx={{
+                              minWidth: 0,
+                              color: 'var(--purple)',
+                              mr: open ? 3 : 'auto',
+                              justifyContent: 'center',
+                          }}
+                      >
+                          <InboxIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={'Dashboard'} sx={{ opacity: open ? 1 : 0 }} />
                   </ListItemButton>
-                </ListItem>
-              </Link>
-            </BrowserRouter>
-            <BrowserRouter>
-              <Link to="/jobs">
-                <ListItem key={'Job Search'} disablePadding sx={{ display: 'block' }}>
+              </ListItem>
+              <ListItem key={'Job Search'} disablePadding sx={{ display: 'block' }}>
                   <ListItemButton
                       sx={{
-                        minHeight: 48,
-                        justifyContent: open ? 'initial' : 'center',
-                        px: 2.5,
+                          minHeight: 48,
+                          justifyContent: open ? 'initial' : 'center',
+                          px: 2.5,
                       }}
+                      onClick={() => window.location = '/jobs'}
                   >
-                    <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : 'auto',
-                          justifyContent: 'center',
-                        }}
-                    >
-                      <MailIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={'Job Search'} sx={{ opacity: open ? 1 : 0 }} />
+                      <ListItemIcon
+                          sx={{
+                              minWidth: 0,
+                              color: 'var(--purple)',
+                              mr: open ? 3 : 'auto',
+                              justifyContent: 'center',
+                          }}
+                      >
+                          <MailIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={'Job Search'} sx={{ opacity: open ? 1 : 0 }} />
                   </ListItemButton>
-                </ListItem>
-              </Link>
-            </BrowserRouter>
+              </ListItem>
           </List>
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 1, marginTop: 8, }}>
