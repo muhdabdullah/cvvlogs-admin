@@ -39,7 +39,7 @@ import Logo from "./Assests/navbar/logo.png";
 import {background} from "quill/ui/icons";
 
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -195,9 +195,9 @@ function App() {
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-              <div className="navbar navbar-expand-lg navbar-light bg-white shadow" style={{background: '#FCA120',}}>
-                  <IconButton onClick={handleDrawerClose} style={{color: 'var(--purple)',}}>
+          <DrawerHeader className="navbar navbar-expand-lg shadow" style={{background: 'var(--purple)'}}>
+              <div>
+                  <IconButton onClick={handleDrawerClose} style={{background: '#FCA120', color: 'var(--white)',}}>
                       {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                   </IconButton>
               </div>
@@ -250,7 +250,7 @@ function App() {
               </ListItem>
           </List>
         </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 1, marginTop: 8, }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 0, marginTop: 11, }}>
           <>
             <Router>
               <Switch>
