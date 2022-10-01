@@ -148,7 +148,6 @@
 
 .dashboard-purple-card-icon {
     margin-top: -50px;
-    width: 8vw;
     padding: 20px 30px 20px 30px !important;
     border-radius: 20px;
     border: none;
@@ -235,3 +234,83 @@
     transform: translateY(20px);
 }
 
+/*Cards With Charts CSS*/
+.dxc-val-elements text{
+    fill: #ffffff !important;
+}
+
+.dxc-arg-elements text{
+    fill: #ffffff !important;
+}
+
+.dashboard-purple-card-chart {
+    margin-top: -200px;
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--purple);
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+    font-size: 2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transition: 2s;
+}
+
+.dashboard-purple-card-chart:hover {
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 30px;
+    border: none;
+    background-color: var(--purple);
+    font-size: 2.2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    margin-top: -180px;
+}
+
+.dashboard-green-card-chart {
+    margin-top: -200px;
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--green);
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+    font-size: 2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transition: 2s;
+}
+
+.dashboard-green-card-chart:hover {
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 30px;
+    border: none;
+    background-color: var(--green);
+    font-size: 2.2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    margin-top: -180px;
+}
+
+.dashboard-yellow-card-chart {
+    margin-top: -200px;
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 20px;
+    border: none;
+    background-color: #DDC45D;
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+    font-size: 2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transition: 2s;
+}
+
+.dashboard-yellow-card-chart:hover {
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 30px;
+    border: none;
+    background-color: #DDC45D;
+    font-size: 2.2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    margin-top: -180px;
+}

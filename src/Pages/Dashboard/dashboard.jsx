@@ -8,7 +8,7 @@ import FullPageLoader from "../../Components/fullpageloader/fullPageLoader";
 import Chart, {
     ArgumentAxis,
     Series,
-    Legend
+    Legend, Size, CommonAxisSettings, Label, Grid, ValueAxis
 } from 'devextreme-react/chart';
 import {getDashboard} from "../../actions/homepageAction";
 
@@ -107,48 +107,79 @@ function Dashboard(props) {
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-12 mt-4">
-                        <div className="row head justify-content-between">
-                            <div className="col-4">
-                                <div className="card rounded-card">
-                                    <div className="card-header custom-card-header">
-                                        <h5>Bar Chart</h5>
-                                    </div>
-                                    <div className="card-body">
+
+
+                <div className="row mt-10" style={{"margin-top": "200px"}}>
+                    <div className="col-4">
+                        <div className="card custom-card row-animation">
+                            <div className="card-body" style={{height: '250px',}}>
+                                <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>
+                                    <div className="dashboard-purple-card-chart" style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
                                         <Chart dataSource={data} palette="material">
                                             <ArgumentAxis tickInterval={10} />
                                             <Series type="bar" />
                                             <Legend visible={false} />
+                                            <Size
+                                                height={250}
+                                            />
+                                            <CommonAxisSettings color={'#ffffff'}>
+                                                <Grid visible={true} color={'#ffffff'} />
+                                            </CommonAxisSettings>
                                         </Chart>
+                                    </div>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-end', height: '100%'}}>
+                                        <h3 className="purple-card-heading"><b>Total Users</b></h3>
+                                        <p>2.5k</p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-4">
-                                <div className="card rounded-card">
-                                    <div className="card-header custom-card-header">
-                                        <h5>Bar Chart</h5>
-                                    </div>
-                                    <div className="card-body">
+                        </div>
+                    </div>
+                    <div className="col-4">
+                        <div className="card custom-card row-animation">
+                            <div className="card-body" style={{height: '250px',}}>
+                                <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>
+                                    <div className="dashboard-green-card-chart" style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
                                         <Chart dataSource={data} palette="material">
                                             <ArgumentAxis tickInterval={10} />
                                             <Series type="bar" />
                                             <Legend visible={false} />
+                                            <Size
+                                                height={250}
+                                            />
+                                            <CommonAxisSettings color={'#ffffff'}>
+                                                <Grid visible={true} color={'#ffffff'} />
+                                            </CommonAxisSettings>
                                         </Chart>
+                                    </div>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-end'}}>
+                                        <h3 className="green-card-heading"><b>Total Users</b></h3>
+                                        <p>2.5k</p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-4">
-                                <div className="card rounded-card">
-                                    <div className="card-header custom-card-header">
-                                        <h5>Bar Chart</h5>
-                                    </div>
-                                    <div className="card-body">
+                        </div>
+                    </div>
+                    <div className="col-4">
+                        <div className="card custom-card row-animation">
+                            <div className="card-body" style={{height: '250px',}}>
+                                <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>
+                                    <div className="dashboard-yellow-card-chart" style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
                                         <Chart dataSource={data} palette="material">
                                             <ArgumentAxis tickInterval={10} />
                                             <Series type="bar" />
                                             <Legend visible={false} />
+                                            <Size
+                                                height={250}
+                                            />
+                                            <CommonAxisSettings color={'#ffffff'}>
+                                                <Grid visible={true} color={'#ffffff'} />
+                                            </CommonAxisSettings>
                                         </Chart>
+                                    </div>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-end'}}>
+                                        <h3 className="yellow-card-heading"><b>Total Users</b></h3>
+                                        <p>2.5k</p>
                                     </div>
                                 </div>
                             </div>
