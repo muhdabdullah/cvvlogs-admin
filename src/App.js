@@ -136,144 +136,146 @@ function App() {
     }
   });
   return (
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="fixed" open={open}>
-          <Toolbar className="navbar navbar-expand-lg navbar-light bg-white shadow">
-            <IconButton
-                style={{
-                  background: "#FCA120",
-                  color: "#fff",
-                  fontSize: "12px",
-                }}
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                sx={{
-                  marginRight: 5,
-                  ...(open && { display: 'none' }),
-                }}
-            >
-              <MenuIcon />
-            </IconButton>
-            {/*<Typography variant="h6" noWrap component="div">*/}
-            {/*  Mini variant drawer*/}
-            {/*</Typography>*/}
-            <img src={Logo} height="50px" />
-            <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%',}}>
-              <div className="col-xs-3">
-                <div className="btn-group">
-                  <button
-                      type="button"
-                      className="btn dropdown-toggle p-0 py-2 px-3"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      id="btn-nav-user"
-                      style={{ fontSize: "16px", borderRadius: "10px" }}
-                  >
-                    <i className="far fa-user pr-2"></i>
-                    {localStorage.getItem("name")}
-                  </button>
-                  <ul className="dropdown-menu">
-                    <li
-                        style={{
-                          fontSize: "16px",
-                          color: "#707070",
-                          cursor: "pointer",
-                        }}
-                    >
-                      <a
-                          className="dropdown-item"
-                      >
-                        Logout
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader className="navbar navbar-expand-lg shadow" style={{background: 'var(--purple)'}}>
-              <div>
-                  <IconButton onClick={handleDrawerClose} style={{background: '#FCA120', color: 'var(--white)',}}>
-                      {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                  </IconButton>
-              </div>
-          </DrawerHeader>
-          {/*<Divider />*/}
-          <List>
-              <ListItem key={'Dashboard'} disablePadding sx={{ display: 'block' }}>
-                  <ListItemButton
-                      sx={{
-                          minHeight: 48,
-                          justifyContent: open ? 'initial' : 'center',
-                          px: 2.5,
-                      }}
-                      onClick={() => window.location = '/dashboard'}
-                  >
-                      <ListItemIcon
-                          sx={{
-                              minWidth: 0,
-                              color: 'var(--purple)',
-                              mr: open ? 3 : 'auto',
-                              justifyContent: 'center',
-                          }}
-                      >
-                          <InboxIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={'Dashboard'} sx={{ opacity: open ? 1 : 0 }} />
-                  </ListItemButton>
-              </ListItem>
-              <ListItem key={'Job Search'} disablePadding sx={{ display: 'block' }}>
-                  <ListItemButton
-                      sx={{
-                          minHeight: 48,
-                          justifyContent: open ? 'initial' : 'center',
-                          px: 2.5,
-                      }}
-                      onClick={() => window.location = '/jobs'}
-                  >
-                      <ListItemIcon
-                          sx={{
-                              minWidth: 0,
-                              color: 'var(--purple)',
-                              mr: open ? 3 : 'auto',
-                              justifyContent: 'center',
-                          }}
-                      >
-                          <MailIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={'Job Search'} sx={{ opacity: open ? 1 : 0 }} />
-                  </ListItemButton>
-              </ListItem>
-          </List>
-        </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 0, marginTop: 11, }}>
-          <>
-            <Router>
+      <>
+          <Router>
               <Switch>
-                <Route path="/" exact component={Login} />
-                <PrivateRoute path="/jobs" exact component={Home} />
-                <PrivateRoute path="/dashboard" exact component={Dashboard} />
-                <PrivateRoute
-                    path="/recruiterProfile/:id"
-                    exact
-                    component={CompanyProfile}
-                />
-                <PrivateRoute
-                    path="/jobDetail/:id"
-                    exact
-                    component={PostedJobsDesc}
-                />
-                <PrivateRoute path="/editJob/:id" exact component={EditJob} />
-                <PrivateRoute path="/applicants/:id" exact component={Applicants} />
+                  <Route path="/" exact component={Login} />
+                  <>
+                      <Box sx={{ display: 'flex' }}>
+                          <CssBaseline />
+                          <AppBar position="fixed" open={open}>
+                              <Toolbar className="navbar navbar-expand-lg navbar-light bg-white shadow">
+                                  <IconButton
+                                      style={{
+                                          background: "#FCA120",
+                                          color: "#fff",
+                                          fontSize: "12px",
+                                      }}
+                                      aria-label="open drawer"
+                                      onClick={handleDrawerOpen}
+                                      edge="start"
+                                      sx={{
+                                          marginRight: 5,
+                                          ...(open && { display: 'none' }),
+                                      }}
+                                  >
+                                      <MenuIcon />
+                                  </IconButton>
+                                  {/*<Typography variant="h6" noWrap component="div">*/}
+                                  {/*  Mini variant drawer*/}
+                                  {/*</Typography>*/}
+                                  <img src={Logo} height="50px" />
+                                  <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%',}}>
+                                      <div className="col-xs-3">
+                                          <div className="btn-group">
+                                              <button
+                                                  type="button"
+                                                  className="btn dropdown-toggle p-0 py-2 px-3"
+                                                  data-bs-toggle="dropdown"
+                                                  aria-expanded="false"
+                                                  id="btn-nav-user"
+                                                  style={{ fontSize: "16px", borderRadius: "10px" }}
+                                              >
+                                                  <i className="far fa-user pr-2"></i>
+                                                  {localStorage.getItem("name")}
+                                              </button>
+                                              <ul className="dropdown-menu">
+                                                  <li
+                                                      style={{
+                                                          fontSize: "16px",
+                                                          color: "#707070",
+                                                          cursor: "pointer",
+                                                      }}
+                                                  >
+                                                      <a
+                                                          className="dropdown-item"
+                                                      >
+                                                          Logout
+                                                      </a>
+                                                  </li>
+                                              </ul>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </Toolbar>
+                          </AppBar>
+                          <Drawer variant="permanent" open={open}>
+                              <DrawerHeader className="navbar navbar-expand-lg shadow" style={{background: 'var(--purple)'}}>
+                                  <div>
+                                      <IconButton onClick={handleDrawerClose} style={{background: '#FCA120', color: 'var(--white)',}}>
+                                          {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                                      </IconButton>
+                                  </div>
+                              </DrawerHeader>
+                              {/*<Divider />*/}
+                              <List>
+                                  <ListItem key={'Dashboard'} disablePadding sx={{ display: 'block' }}>
+                                      <ListItemButton
+                                          sx={{
+                                              minHeight: 48,
+                                              justifyContent: open ? 'initial' : 'center',
+                                              px: 2.5,
+                                          }}
+                                          onClick={() => window.location = '/dashboard'}
+                                      >
+                                          <ListItemIcon
+                                              sx={{
+                                                  minWidth: 0,
+                                                  color: 'var(--purple)',
+                                                  mr: open ? 3 : 'auto',
+                                                  justifyContent: 'center',
+                                              }}
+                                          >
+                                              <InboxIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary={'Dashboard'} sx={{ opacity: open ? 1 : 0 }} />
+                                      </ListItemButton>
+                                  </ListItem>
+                                  <ListItem key={'Job Search'} disablePadding sx={{ display: 'block' }}>
+                                      <ListItemButton
+                                          sx={{
+                                              minHeight: 48,
+                                              justifyContent: open ? 'initial' : 'center',
+                                              px: 2.5,
+                                          }}
+                                          onClick={() => window.location = '/jobs'}
+                                      >
+                                          <ListItemIcon
+                                              sx={{
+                                                  minWidth: 0,
+                                                  color: 'var(--purple)',
+                                                  mr: open ? 3 : 'auto',
+                                                  justifyContent: 'center',
+                                              }}
+                                          >
+                                              <MailIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary={'Job Search'} sx={{ opacity: open ? 1 : 0 }} />
+                                      </ListItemButton>
+                                  </ListItem>
+                              </List>
+                          </Drawer>
+                          <Box component="main" sx={{ flexGrow: 1, p: 1, marginTop: 10, }}>
+                              <PrivateRoute path="/jobs" exact component={Home} />
+                              <PrivateRoute path="/dashboard" exact component={Dashboard} />
+                              <PrivateRoute
+                                  path="/recruiterProfile/:id"
+                                  exact
+                                  component={CompanyProfile}
+                              />
+                              <PrivateRoute
+                                  path="/jobDetail/:id"
+                                  exact
+                                  component={PostedJobsDesc}
+                              />
+                              <PrivateRoute path="/editJob/:id" exact component={EditJob} />
+                              <PrivateRoute path="/applicants/:id" exact component={Applicants} />
+                          </Box>
+                      </Box>
+                  </>
               </Switch>
-            </Router>
-          </>
-        </Box>
-      </Box>
+          </Router>
+      </>
   );
 }
 

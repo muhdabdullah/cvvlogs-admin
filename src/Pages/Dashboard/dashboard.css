@@ -98,28 +98,140 @@
     border: 1px solid var(--grey);
 }
 
-.rounded-card {
-    border-radius: 20px !important;
+.row-animation {
+    width: 100%;
+    justify-content: center;
+    margin-right: 0px !important;
+    animation-name: rowAnimationStartUp;
+    animation-duration: 2s;
+    /*animation-delay: 2s;*/
 }
 
-.custom-card-header {
-    background-color: var(--purple);
-    color: var(--light-purple);
-    border-radius: 20px !important;
+@keyframes rowAnimationStartUp {
+    0% {
+        width: 80%;
+    }
+    100% {
+        width: 100%;
+    }
 }
 
-.card-hover-translate {
+.custom-card {
+    background-color: var(--white);
+    color: var(--purple);
+    border-radius: 15px !important;
+    border: none;
     transition: 0.5s;
-    border-radius: 20px;
-    box-shadow: rgba(50, 50, 93, 0.35) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    /*box-shadow: rgba(50, 50, 93, 0.35) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
 }
 
-.card-hover-translate:hover {
-    transform: translateY(-10px);
-    border-radius: 20px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+.custom-card:hover {
+    background-color: var(--white);
+    color: var(--purple);
+    border: none;
+    border-radius: 15px !important;
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+    /*box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
 }
 
-.dashboard-card-icon {
-    font-size: 5rem;
+.custom-card p {
+    font-size: 2.5vw;
+    font-weight: bolder;
+    color: #FCA120 !important;
 }
+
+.purple-card-heading {
+    color: var(--purple);
+}
+
+.dashboard-purple-card-icon {
+    margin-top: -50px;
+    width: 8vw;
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--purple);
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+    font-size: 2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transition: 2s;
+}
+
+.dashboard-purple-card-icon:hover {
+    padding: 20px 30px 20px 30px !important;
+    width: 9vw;
+    border-radius: 30px;
+    border: none;
+    background-color: var(--purple);
+    font-size: 2.2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transform: translateY(20px);
+}
+
+.green-card-heading {
+    color: var(--green);
+    /*color: #6DDD5D;*/
+}
+
+.dashboard-green-card-icon {
+    margin-top: -50px;
+    width: 8vw;
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--green);
+    /*background-color: #6DDD5D;*/
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+    font-size: 2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transition: 2s;
+}
+
+.dashboard-green-card-icon:hover {
+    padding: 20px 30px 20px 30px !important;
+    width: 9vw;
+    border-radius: 30px;
+    border: none;
+    /*background-color: #6DDD5D;*/
+    background-color: var(--green);
+    font-size: 2.2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transform: translateY(20px);
+}
+
+.yellow-card-heading {
+    color: #DDC45D;
+}
+
+.dashboard-yellow-card-icon {
+    margin-top: -50px;
+    width: 8vw;
+    padding: 20px 30px 20px 30px !important;
+    border-radius: 20px;
+    border: none;
+    background-color: #DDC45D;
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+    font-size: 2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transition: 2s;
+}
+
+.dashboard-yellow-card-icon:hover {
+    padding: 20px 30px 20px 30px !important;
+    width: 9vw;
+    border-radius: 30px;
+    border: none;
+    background-color: #DDC45D;
+    font-size: 2.2vw;
+    /*color: #b38dff !important;*/
+    color: #ffffff !important;
+    transform: translateY(20px);
+}
+

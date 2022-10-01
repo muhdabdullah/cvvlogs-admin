@@ -33,7 +33,7 @@ function Login(props) {
     localStorage.getItem("auth_id") !== undefined &&
     localStorage.getItem("auth_id") !== ""
   ) {
-    history.push("/jobs");
+    history.push("/dashboard");
   }
 
   return (

@@ -60,51 +60,49 @@ function Dashboard(props) {
         <>
             {/*<Nav2 />*/}
             <div className="container-fluid">
-                <div className="row">
-                    <div className="col-3">
-                        <div className="card card-hover-translate">
-                            <div className="card-header custom-card-header">
-                                <h5>Total Users</h5>
-                            </div>
+                <div className="row mt-5">
+                    <div className="col-4">
+                        <div className="card custom-card row-animation">
                             <div className="card-body" style={{height: '150px',}}>
-                                <div style={{display: 'flex', "flex-direction": 'column', "justify-content": 'space-between'}}>
-                                    <div className="row justify-content-between">
-                                        <h1><bold>1.8K</bold></h1>
+                                <div style={{display: 'flex', "justify-content": 'space-between', height: '100%'}}>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
+                                        <h3 className="purple-card-heading"><b>Total Users</b></h3>
+                                        <p>2.5k</p>
                                     </div>
-                                    <div className="row" style={{display: 'flex', "justify-content": 'flex-end'}}>
-                                        <i className="fa fa-user dashboard-card-icon"></i>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
+                                        <i className="fas fa-user dashboard-purple-card-icon" style={{display: 'flex', "justify-content": 'center'}}></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-3">
-                        <div className="card card-hover-translate">
-                            <div className="card-header custom-card-header">
-                                <h5>Total Jobs</h5>
-                            </div>
+                    <div className="col-4">
+                        <div className="card custom-card row-animation">
                             <div className="card-body" style={{height: '150px',}}>
-                                <p>Card Content</p>
+                                <div style={{display: 'flex', "justify-content": 'space-between', height: '100%'}}>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
+                                        <h3 className="green-card-heading"><b>Total Active Users</b></h3>
+                                        <p>1.8k</p>
+                                    </div>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
+                                        <i className="fas fa-user dashboard-green-card-icon" style={{display: 'flex', "justify-content": 'center'}}></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-3">
-                        <div className="card card-hover-translate">
-                            <div className="card-header custom-card-header">
-                                <h5>Card</h5>
-                            </div>
+                    <div className="col-4">
+                        <div className="card custom-card row-animation">
                             <div className="card-body" style={{height: '150px',}}>
-                                <p>Card Content</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-3">
-                        <div className="card card-hover-translate">
-                            <div className="card-header custom-card-header">
-                                <h5>Card</h5>
-                            </div>
-                            <div className="card-body" style={{height: '150px',}}>
-                                <p>Card Content</p>
+                                <div style={{display: 'flex', "justify-content": 'space-between', height: '100%'}}>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
+                                        <h3 className="yellow-card-heading"><b>Total Active Jobs</b></h3>
+                                        <p>22.5k</p>
+                                    </div>
+                                    <div style={{display: 'flex', "flex-direction": "column", "justify-content": 'flex-start'}}>
+                                        <i className="fas fa-user dashboard-yellow-card-icon" style={{display: 'flex', "justify-content": 'center'}}></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
