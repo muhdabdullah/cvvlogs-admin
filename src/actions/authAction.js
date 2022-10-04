@@ -47,6 +47,7 @@ export const SignIn = (username, password) => {
       });
   };
 };
+
 export const signOut = () => {
   return (dispatch) => {
     fetch(`${process.env.REACT_APP_API_END_POINT}/logout.php`, {

@@ -27,6 +27,7 @@ import addtofavReducer from "./addtofavReducer";
 import getCountriesDataReducer from "./getCountriesDataReducer";
 import feedbackModalReducer from "./feedbackModalReducer";
 import homepageReducer from "./homepageReducer";
+import userReducer from "./usersReducer";
 
 const persistConfig = {
   key: "root",
@@ -60,6 +61,7 @@ const mainReducer = combineReducers({
   addtofavReducer: addtofavReducer,
   getCountriesDataReducer: getCountriesDataReducer,
   feedbackModalReducer: feedbackModalReducer,
+  userReducer: userReducer,
 });
 
 export default persistReducer(persistConfig, mainReducer);

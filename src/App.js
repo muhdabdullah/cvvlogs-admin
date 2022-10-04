@@ -23,8 +23,6 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -33,10 +31,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import BadgeIcon from '@mui/icons-material/Badge';
+import PeopleIcon from '@mui/icons-material/People';
 import Logo from "./Assests/navbar/logo.png";
 import {background} from "quill/ui/icons";
+import {signOut} from "./actions/authAction";
+import {connect} from "react-redux";
+import Users from "./Pages/Users/Users";
+import ApplicantsProfile from "./Pages/ApplicantsProfile/ApplicantsProfile";
 
 
 const drawerWidth = 300;
@@ -106,7 +109,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-function App() {
+function App(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -189,6 +192,7 @@ function App() {
                                                   >
                                                       <a
                                                           className="dropdown-item"
+                                                          onClick={() => props.signOut()}
                                                       >
                                                           Logout
                                                       </a>
@@ -226,7 +230,7 @@ function App() {
                                                   justifyContent: 'center',
                                               }}
                                           >
-                                              <InboxIcon />
+                                              <DashboardIcon />
                                           </ListItemIcon>
                                           <ListItemText primary={'Dashboard'} sx={{ opacity: open ? 1 : 0 }} />
                                       </ListItemButton>
@@ -248,25 +252,53 @@ function App() {
                                                   justifyContent: 'center',
                                               }}
                                           >
-                                              <MailIcon />
+                                              <BadgeIcon />
                                           </ListItemIcon>
                                           <ListItemText primary={'Job Search'} sx={{ opacity: open ? 1 : 0 }} />
+                                      </ListItemButton>
+                                  </ListItem>
+                                  <ListItem key={'Users'} disablePadding sx={{ display: 'block' }}>
+                                      <ListItemButton
+                                          sx={{
+                                              minHeight: 48,
+                                              justifyContent: open ? 'initial' : 'center',
+                                              px: 2.5,
+                                          }}
+                                          onClick={() => window.location = '/users'}
+                                      >
+                                          <ListItemIcon
+                                              sx={{
+                                                  minWidth: 0,
+                                                  color: 'var(--purple)',
+                                                  mr: open ? 3 : 'auto',
+                                                  justifyContent: 'center',
+                                              }}
+                                          >
+                                              <PeopleIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary={'Users'} sx={{ opacity: open ? 1 : 0 }} />
                                       </ListItemButton>
                                   </ListItem>
                               </List>
                           </Drawer>
                           <Box component="main" sx={{ flexGrow: 1, p: 1, marginTop: 10, }}>
-                              <PrivateRoute path="/jobs" exact component={Home} />
                               <PrivateRoute path="/dashboard" exact component={Dashboard} />
+                              <PrivateRoute path="/jobs" exact component={Home} />
+                              <PrivateRoute
+                                  path="/jobDetail/:id"
+                                  exact
+                                  component={PostedJobsDesc}
+                              />
                               <PrivateRoute
                                   path="/recruiterProfile/:id"
                                   exact
                                   component={CompanyProfile}
                               />
+                              <PrivateRoute path="/users" exact component={Users} />
                               <PrivateRoute
-                                  path="/jobDetail/:id"
+                                  path="/userprofile/:id"
                                   exact
-                                  component={PostedJobsDesc}
+                                  component={ApplicantsProfile}
                               />
                               <PrivateRoute path="/editJob/:id" exact component={EditJob} />
                               <PrivateRoute path="/applicants/:id" exact component={Applicants} />
@@ -279,4 +311,8 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+    signOut: () => dispatch(signOut()),
+});
+
+export default  connect(null, mapDispatchToProps) (App);

@@ -11,6 +11,7 @@ import Chart, {
     Legend, Size, CommonAxisSettings, Label, Grid, ValueAxis
 } from 'devextreme-react/chart';
 import {getDashboard} from "../../actions/homepageAction";
+import {signOut} from "../../actions/authAction";
 
 const data = [{
     arg: 1990,
