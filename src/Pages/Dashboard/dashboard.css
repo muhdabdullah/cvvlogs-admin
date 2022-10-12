@@ -137,7 +137,7 @@
 }
 
 .custom-card p {
-    font-size: 2.5vw;
+    font-size: 2vw;
     font-weight: bolder;
     color: #FCA120 !important;
 }
@@ -153,7 +153,7 @@
     border: none;
     background-color: var(--purple);
     box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
-    font-size: 2vw;
+    font-size: 1.5vw;
     /*color: #b38dff !important;*/
     color: #ffffff !important;
     transition: 2s;
@@ -161,11 +161,10 @@
 
 .dashboard-purple-card-icon:hover {
     padding: 20px 30px 20px 30px !important;
-    width: 9vw;
     border-radius: 30px;
     border: none;
     background-color: var(--purple);
-    font-size: 2.2vw;
+    font-size: 1.8vw;
     /*color: #b38dff !important;*/
     color: #ffffff !important;
     transform: translateY(20px);
@@ -178,14 +177,13 @@
 
 .dashboard-green-card-icon {
     margin-top: -50px;
-    width: 8vw;
     padding: 20px 30px 20px 30px !important;
     border-radius: 20px;
     border: none;
     background-color: var(--green);
     /*background-color: #6DDD5D;*/
     box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
-    font-size: 2vw;
+    font-size: 1.5vw;
     /*color: #b38dff !important;*/
     color: #ffffff !important;
     transition: 2s;
@@ -193,12 +191,11 @@
 
 .dashboard-green-card-icon:hover {
     padding: 20px 30px 20px 30px !important;
-    width: 9vw;
     border-radius: 30px;
     border: none;
     /*background-color: #6DDD5D;*/
     background-color: var(--green);
-    font-size: 2.2vw;
+    font-size: 1.8vw;
     /*color: #b38dff !important;*/
     color: #ffffff !important;
     transform: translateY(20px);
@@ -210,13 +207,12 @@
 
 .dashboard-yellow-card-icon {
     margin-top: -50px;
-    width: 8vw;
     padding: 20px 30px 20px 30px !important;
     border-radius: 20px;
     border: none;
     background-color: #DDC45D;
     box-shadow: rgba(0, 0, 0, 0.30) 0px 10px 20px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
-    font-size: 2vw;
+    font-size: 1.5vw;
     /*color: #b38dff !important;*/
     color: #ffffff !important;
     transition: 2s;
@@ -224,11 +220,10 @@
 
 .dashboard-yellow-card-icon:hover {
     padding: 20px 30px 20px 30px !important;
-    width: 9vw;
     border-radius: 30px;
     border: none;
     background-color: #DDC45D;
-    font-size: 2.2vw;
+    font-size: 1.8vw;
     /*color: #b38dff !important;*/
     color: #ffffff !important;
     transform: translateY(20px);

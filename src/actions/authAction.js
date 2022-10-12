@@ -4,7 +4,7 @@ export const SignIn = (username, password) => {
       type: "RESET_AUTH_MESSAGE",
       loading: false,
     });
-    fetch(`${process.env.REACT_APP_API_END_POINT}/login.php`, {
+    fetch(`${process.env.REACT_APP_API_END_POINT}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -16,9 +16,9 @@ export const SignIn = (username, password) => {
         return res.json();
       })
       .then((response) => {
-        if (response.status === 200) {
-          const auth_id = response.data.auth_id;
-          const username = response.data.username;
+        if (!response.access_token || response.access_token !== '') {
+          const auth_id = response.user.id;
+          const username = response.user.username;
           dispatch({
             type: "SIGN_IN",
             authError: null,
@@ -27,10 +27,11 @@ export const SignIn = (username, password) => {
             loading: true,
           });
           localStorage.setItem("auth_id", auth_id);
+          localStorage.setItem("access_token", response.access_token);
           localStorage.setItem("name", username);
           window.location = "/dashboard";
         } else {
-          alert(response.message);
+          alert(response.error);
         }
       })
       .catch((error) => {

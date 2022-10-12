@@ -1,23 +1,22 @@
 export const getDashboard = (page, admin_status = undefined) => {
     return (dispatch) => {
-        fetch(`${process.env.REACT_APP_API_END_POINT}/get_job_list.php`, {
-            method: "POST",
+        fetch(`${process.env.REACT_APP_API_END_POINT}/get-stats`, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                auth_id: `${localStorage.getItem("auth_id")}`,
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
             },
-            body: JSON.stringify({
-                page: page,
-                admin_status: admin_status,
-            }),
+            // body: JSON.stringify({
+            //     page: page,
+            //     // admin_status: admin_status,
+            // }),
         })
             .then((res) => res.json())
             .then((response) => {
-                if (response.status == 200) {
-                    const dashboard = response.data;
+                if (response.success) {
                     dispatch({
                         type: "GET_HOMEPAGE",
-                        homepage: dashboard,
+                        homepage: response.data,
                         homepageResponse: "got it",
                         loading: true,
                     });

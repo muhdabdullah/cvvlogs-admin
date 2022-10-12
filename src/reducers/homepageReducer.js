@@ -11,7 +11,7 @@ const homepageReducer = (state = initState, action) => {
             ...state,
             homepage: action.homepage,
             homepageResponse: action.homepageResponse,
-            loading:action.loading,
+            loading: action.loading,
         }
     }
     // /// THESE ARE GENERAL APPLICABLE TO ALL API's

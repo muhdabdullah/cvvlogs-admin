@@ -16,3 +16,68 @@
 body {
   background-color: var(--bg-color);
 }
+
+
+/* DevExtreme Generic CSS */
+.dx-datagrid{
+  font-size: 12px;
+}
+
+.dx-datagrid .dx-datagrid-headers {
+  background-color: var(--purple) !important;
+  font-size: 14px;
+}
+
+.dx-datagrid .dx-datagrid-header-panel {
+  padding: 0 !important;
+}
+
+.dx-datagrid .dx-header-filter {
+  color: var(--light-purple) !important;
+  align-self: center;
+}
+
+.dx-datagrid .dx-datagrid-headers .dx-datagrid-text-content
+{
+  color: var(--light-purple) !important;
+  vertical-align: center;
+  text-align: center;
+}
+
+.dx-datagrid .dx-datagrid-headers .dx-texteditor-input
+{
+  border-radius: 0px;
+}
+
+.dx-datagrid .dx-datagrid-headers .dx-selectbox
+{
+  border-radius: 0px;
+}
+
+.dx-datagrid .dx-datagrid-headers .dx-datagrid-content .dx-datagrid-table .dx.datagrid.filter.row
+{
+  background-color: var(--light-purple) !important;
+}
+
+.dx-pager .dx-page-sizes .dx-selection, .dx-pager .dx-pages .dx-selection {
+  background-color: var(--purple) !important;
+  color: var(--light-purple) !important;
+}
+
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+  vertical-align: middle;
+}
+
+
+.dx-datagrid-table .dx-header-row .dx-command-edit {
+  background-color: var(--purple) !important;
+  color: var(--light-purple) !important;
+}
+
+.dx-pager .dx-next-button {
+  color: var(--purple) !important;
+}
+
+.dx-pager .dx-prev-button {
+  color: var(--purple) !important;
+}
