@@ -81,3 +81,8 @@ body {
 .dx-pager .dx-prev-button {
   color: var(--purple) !important;
 }
+
+.dx-popup-normal .dx-popup-title {
+  background-color: var(--purple) !important;
+  color: var(--light-purple) !important;
+}

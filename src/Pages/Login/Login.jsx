@@ -7,23 +7,48 @@ import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Logo from "../../Assests/navbar/logo.png";
 import LoginImg from "../../Assests/login.png";
+import MuiAlert from '@mui/material/Alert';
+import {Snackbar} from "@mui/material";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 
 function Login(props) {
   const [username, setUsername] = useState("");
+  const [loginInProgress, setLoginInProgress] = useState(false);
   const [password, setPassword] = useState("");
   const [ecoComplaince, setEcoComplaince] = useState(0);
+  const [snackOpen, setSnackOpen] = React.useState(false);
+  const [snackMessage, setSnackMessage] = React.useState('');
+  const [snackSeverity, setSnackSeverity] = React.useState('success');
 
   const AddLogin = async () => {
+    setLoginInProgress(true);
     const reg =
       /^([a-zA-Z0-9~`!@#\$%\^&\*\(\)_\-\+={\[\}\]\|\\:;"'<,>\.\?\/  ]*)@([a-zA-Z]+)\.([a-zA-Z]+).([a-zA-Z]+)$/;
     if (username == "") {
-      alert("Username required");
+      setSnackMessage('Username required');
+      setSnackSeverity('error');
+      setSnackOpen(true);
+      setLoginInProgress(false);
     } else if (password == "") {
-      alert("Password required");
+      setSnackMessage('Password required');
+      setSnackSeverity('error');
+      setSnackOpen(true);
+      setLoginInProgress(false);
     } else if (password.length < 6) {
-      alert("Password length must be greater than 6");
+      setSnackMessage('Password length must be greater than 6');
+      setSnackSeverity('error');
+      setSnackOpen(true);
+      setLoginInProgress(false);
     } else {
       await props.SignIn(username, password);
+      // setSnackMessage('Logging In');
+      // setSnackSeverity('success');
+      // setSnackOpen(true);
+      setLoginInProgress(false);
     }
   };
 
@@ -36,8 +61,21 @@ function Login(props) {
     history.push("/dashboard");
   }
 
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackOpen(false);
+  };
+
   return (
     <>
+      <Snackbar open={snackOpen} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={snackSeverity} sx={{ width: '100%' }}>
+          {snackMessage}
+        </Alert>
+      </Snackbar>
       <Helmet>
         <meta charSet="utf-8" />
         <title>Login</title>
@@ -49,7 +87,7 @@ function Login(props) {
             <div className="col-lg-4 col-sm-12 login-image-container">
               <img src={LoginImg} alt="Login Image" className="login-img" />
             </div>
-            <div className="col-lg-8 col-sm-12">
+            <div className="col-lg-8 col-sm-12" style={{display: 'flex', "flex-direction": 'column', "justify-content": 'center'}}>
               <div className="row">
                 <div className="col-12">
                   <img src={Logo} alt="Logo" className="logo my-2" />
@@ -105,9 +143,10 @@ function Login(props) {
                     type="submit"
                     className="btn btn-primary login-recr-btn form-control d-flex justify-content-center align-items-center"
                     onClick={() => AddLogin()}
+                    disabled={loginInProgress}
                   >
                     <i className="fas fa-sign-in mr-3"></i>
-                    Login to Account
+                    <span>Login to Account</span>
                   </button>
                 </div>
                 <div className="col-12">
