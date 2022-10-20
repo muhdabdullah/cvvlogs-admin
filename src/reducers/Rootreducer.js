@@ -28,6 +28,7 @@ import getCountriesDataReducer from "./getCountriesDataReducer";
 import feedbackModalReducer from "./feedbackModalReducer";
 import homepageReducer from "./homepageReducer";
 import userReducer from "./usersReducer";
+import homepageMonthlyReducer from "./homepageMonthlyReducer";
 
 const persistConfig = {
   key: "root",
@@ -40,6 +41,7 @@ const mainReducer = combineReducers({
   otpReducer: otpReducer,
   dashboardReducer: dashboardReducer,
   homepageReducer: homepageReducer,
+  homepageMonthlyReducer: homepageMonthlyReducer,
   getCreateJobReducer: getCreateJobReducer,
   alljobsReducer: alljobsReducer,
   jobdescriptionReducer: jobdescriptionReducer,
