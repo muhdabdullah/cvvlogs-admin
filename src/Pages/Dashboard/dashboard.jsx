@@ -88,7 +88,6 @@ function Dashboard(props) {
                         };
                         deviceRecruiters.push(ObjectToMap);
                     });
-                    console.log(deviceRecruiters);
                     setMonthlyDeviceTypeRecruitersData(deviceRecruiters);
                 } else {
                     alert(response.message);
