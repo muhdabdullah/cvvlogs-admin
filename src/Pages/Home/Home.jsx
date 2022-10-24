@@ -6,26 +6,14 @@ import { connect } from "react-redux";
 import { getDeleteJob } from "../../actions/deleteJobAction";
 import FullPageLoader from "../../Components/fullpageloader/fullPageLoader";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { makeStyles } from "@material-ui/core/styles";
-import DataGrid, {
-  Column,
-  Grouping,
-  GroupPanel,
-  Pager,
-  Paging,
-  SearchPanel,
-} from 'devextreme-react/data-grid';
 import {
     Button,
     Card,
     CardContent, ListItem, Menu, MenuItem, Pagination,
 } from "@mui/material";
 import CardHeader from '@mui/material/CardHeader';
-import {Link} from "react-router-dom";
 import {Popup, Position} from "devextreme-react/popup";
-import ReactPlayer from "react-player";
 import moment from "moment";
-import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
 
 const options = [
