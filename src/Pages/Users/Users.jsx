@@ -9,6 +9,14 @@ import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
 import { Popup, Position } from 'devextreme-react/popup';
 import ReactPlayer from "react-player";
+import DataGrid, {
+    Column,
+    Grouping,
+    GroupPanel,
+    Pager,
+    Paging,
+    SearchPanel,
+} from 'devextreme-react/data-grid';
 
 function Users(props) {
     const [page, setPage] = React.useState(1);
@@ -56,6 +64,15 @@ function Users(props) {
         setVideoPopUp(false);
     };
 
+    const cellRenderShowVideo = (data) => {
+        console.log(data);
+        return <div style={{width: "100%", display: "flex", "justify-content": "center"}}>
+            <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(data.data['first_name'], data.data['last_name'], data.data['link'])}}>
+                <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>
+            </IconButton>
+        </div>;
+    };
+
     // const showVideoPopUP = async () => {
     //     setVideoPopUp(false);
     // };
@@ -76,37 +93,61 @@ function Users(props) {
                         title="Users"
                     />
                     <CardContent>
+                        <DataGrid
+                            dataSource={users}
+                            allowColumnReordering={true}
+                            rowAlternationEnabled={true}
+                            showBorders={true}
+                            height="75vh"
+                        >
+                            <GroupPanel visible={true} />
+                            <SearchPanel visible={true} highlightCaseSensitive={true} width="20vw"/>
 
-                        {users.length > 0 ? (
-                            users.map((user) => (
-                                <div key={user['link']} className="card" style={{"border-radius": "10px", "margin-bottom": "5px",}}>
-                                    <div className="card-body">
-                                        <div className="row" style={{"justify-content": "space-between"}}>
-                                            <div className="col-xs-2 col-md-2 col-lg-2">
-                                                <h5 style={{"margin-bottom": '0px !important', color: "var(--purple)"}}>{ user['first_name'] ? user['first_name'] : '' }</h5>
-                                            </div>
-                                            <div className="col-xs-2 col-md-2 col-lg-2">
-                                                <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['last_name'] ? user['last_name'] : '' }</p>
-                                            </div>
-                                            <div className="col-xs-2 col-md-2 col-lg-2">
-                                                <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['num'] ? user['num'] : '' }</p>
-                                            </div>
-                                            <div className="col-xs-1 col-md-1 col-lg-1">
-                                                <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['status'] ? user['status'] : '' }</p>
-                                            </div>
-                                            <div className="col-xs-1 col-md-1 col-lg-1">
-                                                <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(user['first_name'], user['last_name'], user['link'])}}>
-                                                    <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>
-                                                </IconButton>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <>
-                            </>
-                        )}
+                            <Column dataField="first_name" dataType="string" caption="First Name" />
+                            <Column dataField="last_name" dataType="string" caption="Last Name" />
+                            <Column dataField="num" dataType="string" caption="Phone No." />
+                            <Column dataField="status" dataType="string" />
+                            <Column dataField="Video"
+                                    width={100}
+                                    allowSorting={false}
+                                    cellRender={cellRenderShowVideo}
+                            />
+                            {/*<Column dataField="Customer" dataType="string" width={150} />*/}
+
+                            <Pager allowedPageSizes={[10, 20, 30]} showPageSizeSelector={true} showNavigationButtons={true} showInfo={true} displayMode={'full'} />
+                            <Paging defaultPageSize={10} />
+                        </DataGrid>
+
+                        {/*{users.length > 0 ? (*/}
+                        {/*    users.map((user) => (*/}
+                        {/*        <div key={user['link']} className="card" style={{"border-radius": "10px", "margin-bottom": "5px",}}>*/}
+                        {/*            <div className="card-body">*/}
+                        {/*                <div className="row" style={{"justify-content": "space-between"}}>*/}
+                        {/*                    <div className="col-xs-2 col-md-2 col-lg-2">*/}
+                        {/*                        <h5 style={{"margin-bottom": '0px !important', color: "var(--purple)"}}>{ user['first_name'] ? user['first_name'] : '' }</h5>*/}
+                        {/*                    </div>*/}
+                        {/*                    <div className="col-xs-2 col-md-2 col-lg-2">*/}
+                        {/*                        <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['last_name'] ? user['last_name'] : '' }</p>*/}
+                        {/*                    </div>*/}
+                        {/*                    <div className="col-xs-2 col-md-2 col-lg-2">*/}
+                        {/*                        <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['num'] ? user['num'] : '' }</p>*/}
+                        {/*                    </div>*/}
+                        {/*                    <div className="col-xs-1 col-md-1 col-lg-1">*/}
+                        {/*                        <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['status'] ? user['status'] : '' }</p>*/}
+                        {/*                    </div>*/}
+                        {/*                    <div className="col-xs-1 col-md-1 col-lg-1">*/}
+                        {/*                        <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(user['first_name'], user['last_name'], user['link'])}}>*/}
+                        {/*                            <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>*/}
+                        {/*                        </IconButton>*/}
+                        {/*                    </div>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    ))*/}
+                        {/*) : (*/}
+                        {/*    <>*/}
+                        {/*    </>*/}
+                        {/*)}*/}
                     </CardContent>
                 </Card>
             </div>
@@ -140,6 +181,7 @@ function Users(props) {
         </>
     );
 }
+
 
 const mapStateToProps = (state) => ({
     userReducer: state.userReducer,

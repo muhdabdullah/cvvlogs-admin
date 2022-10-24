@@ -1,6 +1,6 @@
 export const getDashboard = (page, admin_status = undefined) => {
     return (dispatch) => {
-        fetch(`${process.env.REACT_APP_API_END_POINT}/get-job-list?admin_status=${admin_status}`, {
+        fetch(`${process.env.REACT_APP_API_END_POINT}/get-job-list?admin_status=${admin_status}&page=${page}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

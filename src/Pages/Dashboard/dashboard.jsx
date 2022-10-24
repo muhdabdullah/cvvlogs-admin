@@ -31,11 +31,6 @@ function Dashboard(props) {
     useEffect(() => {
         monthlyStats("2021-09-01", "2022-10-31");
     }, []);
-    // useEffect(() => {
-    //     console.log('MONTHLY RED');
-    //     console.log(props.homepageMonthlyReducer);
-    //     setMonthlyStatsData((prev) => (prev = props.homepageMonthlyReducer.homepage));
-    // }, [props.homepageMonthlyReducer]);
 
     useEffect(() => {
         setStats((prev) => (prev = props.homepageReducer.homepage));
