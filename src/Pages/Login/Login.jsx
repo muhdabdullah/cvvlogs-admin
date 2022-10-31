@@ -44,7 +44,9 @@ function Login(props) {
       setSnackOpen(true);
       setLoginInProgress(false);
     } else {
-      await props.SignIn(username, password);
+      let result = await props.SignIn(username, password);
+      console.log('RESULT');
+      console.log(result)
       // setSnackMessage('Logging In');
       // setSnackSeverity('success');
       // setSnackOpen(true);

@@ -1,5 +1,5 @@
 export const SignIn = (username, password) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({
       type: "RESET_AUTH_MESSAGE",
       loading: false,
@@ -50,30 +50,34 @@ export const SignIn = (username, password) => {
 };
 
 export const signOut = () => {
-  return (dispatch) => {
-    fetch(`${process.env.REACT_APP_API_END_POINT}/logout.php`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        auth_id: localStorage.getItem("auth_id"),
-      },
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          localStorage.removeItem("auth_id");
-          localStorage.removeItem("name");
-          window.location = "/";
-          dispatch({
-            type: "SIGN_OUT",
-          });
-        }
-      })
-      .catch((error) => {
-        const authError = JSON.stringify(error);
-        console.log(authError);
-      });
-  };
+  localStorage.removeItem("auth_id");
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("name");
+  window.location = "/";
+  // return (dispatch) => {
+  //   fetch(`${process.env.REACT_APP_API_END_POINT}/logout.php`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       auth_id: localStorage.getItem("auth_id"),
+  //     },
+  //   })
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         localStorage.removeItem("auth_id");
+  //         localStorage.removeItem("name");
+  //         window.location = "/";
+  //         dispatch({
+  //           type: "SIGN_OUT",
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       const authError = JSON.stringify(error);
+  //       console.log(authError);
+  //     });
+  // };
 };

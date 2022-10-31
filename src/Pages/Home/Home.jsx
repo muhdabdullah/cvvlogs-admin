@@ -9,18 +9,35 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
     Button,
     Card,
-    CardContent, ListItem, Menu, MenuItem, Pagination,
+    CardContent,
+    ListItem,
+    Menu,
+    MenuItem,
+    Pagination,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead, TablePagination,
+    TableRow,
 } from "@mui/material";
 import CardHeader from '@mui/material/CardHeader';
 import {Popup, Position} from "devextreme-react/popup";
 import moment from "moment";
 import List from "@mui/material/List";
+// import DataGrid, {Column, GroupPanel, Pager, Paging, SearchPanel} from "devextreme-react/data-grid";
+import IconButton from "@mui/material/IconButton";
+import { DataGrid } from '@mui/x-data-grid';
+import Box from "@mui/material/Box";
+import {GridRenderCellParams} from "@mui/x-data-grid";
 
 const options = [
     'All Jobs',
     'Pending Jobs',
     'Posted Jobs'
 ];
+
 
 function Home(props) {
   const [page, setPage] = React.useState(1);
@@ -40,6 +57,7 @@ function Home(props) {
   }, []);
 
   useEffect(() => {
+      console.log(props.dashboardReducer.dashboard.data);
     setJobsListing(
       (prev) => (prev = props.dashboardReducer.dashboard.data)
     );
@@ -58,14 +76,14 @@ function Home(props) {
     return null;
   };
 
-  const handleChange = (event, value) => {
+  const handleChange = (value) => {
     setPage(value);
     dashboardData(value, status);
   };
 
-    const showVideoPopUP = (name, data) => {
-        setVideoPopUpTitle(name);
-        setVideoPopUpData(data);
+    const showVideoPopUP = (data) => {
+        setVideoPopUpTitle(data['row'].job_title);
+        setVideoPopUpData(data['row'].recruiter);
         setVideoPopUp(true);
     };
     const hideVideoPopUP = () => {
@@ -100,6 +118,25 @@ function Home(props) {
     const handleCloseMenu = () => {
         setAnchorEl(null);
     };
+
+    const columns = [
+        { field: 'job_title', headerName: 'Title', flex: 1 },
+        { field: 'city', headerName: 'City', flex: 1 },
+        { field: 'country', headerName: 'Country', flex: 1 },
+        { field: 'job_admin_status', headerName: 'Status', flex: 1 },
+        { field: 'total_applicants', headerName: 'Applicants', flex: 1 },
+        {
+            headerName: 'Actions',
+            flex: 1,
+            renderCell: (params: GridRenderCellParams<any>) => (
+                <button
+                    className="btn btn-primary btn-sm"
+                    style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}
+                    onClick={() => {showVideoPopUP(params)}}
+                >View Recruiter</button>
+            ),
+        },
+    ];
 
   if (loading == false) {
     return <FullPageLoader />;
@@ -161,75 +198,61 @@ function Home(props) {
                                   </MenuItem>
                               ))}
                           </Menu>
-                          {/*<button*/}
-                          {/*    className={`${status == undefined ? "active" : ""} btn mr-4`}*/}
-                          {/*    onClick={() => {*/}
-                          {/*        setStatus((prev) => (prev = undefined));*/}
-                          {/*        dashboardData(1, undefined);*/}
-                          {/*    }}*/}
-                          {/*>*/}
-                          {/*    All 10+*/}
-                          {/*</button>*/}
-                          {/*<button*/}
-                          {/*    className={`${status == 1 ? "active" : ""} btn mr-4`}*/}
-                          {/*    onClick={() => {*/}
-                          {/*        setStatus((prev) => (prev = 1));*/}
-                          {/*        dashboardData(1, 1);*/}
-                          {/*    }}*/}
-                          {/*>*/}
-                          {/*    Posted*/}
-                          {/*</button>*/}
-                          {/*<button*/}
-                          {/*    className={`${status == 0 ? "active" : ""} btn mr-4`}*/}
-                          {/*    onClick={() => {*/}
-                          {/*        setStatus((prev) => (prev = 0));*/}
-                          {/*        dashboardData(1, 0);*/}
-                          {/*    }}*/}
-                          {/*>*/}
-                          {/*    Pending*/}
-                          {/*</button>*/}
                       </div>
                   </>
               }
           />
           <CardContent>
+              <div style={{ display: 'flex', height: '100%' }}>
+                  <div style={{ flexGrow: 1 }}>
+                      <Box sx={{ height: '75vh', width: '100%' }}>
+                          <DataGrid
+                              getRowId={(row: any) => row.job_id}
+                              rows={jobsListing}
+                              rowCount={jobsLength}
+                              rowsPerPageOptions={[15]}
+                              pagination
+                              page={page}
+                              pageSize={15}
+                              paginationMode="server"
+                              onPageChange={(newPage) => handleChange(newPage)}
+                              columns={columns}
+                          />
+                      </Box>
+                  </div>
+              </div>
 
-              {jobsListing.length > 0 ? (
-                  jobsListing.map((job) => (
-                      <div className="card" style={{"border-radius": "10px", "margin-bottom": "5px",}}>
-                          <div className="card-body p-1">
-                              <div className="row px-3 justify-content-between">
-                                  <div className="col-6">
-                                      <h5 style={{"margin-bottom": '0px !important', color: "var(--purple)"}}>{ job['job_title'] ? job['job_title'] : '' }</h5>
-                                  </div>
-                                  <div className="col-2">
-                                      <p style={{"font-size": '16px', "font-weight": "bold"}}>{ job['job_admin_status'] ? job['job_admin_status'] : '' }</p>
-                                  </div>
-                                  <div className="col-2">
-                                      <p style={{"font-size": '16px', "font-weight": "bold"}}>Applicants: <span style={{color: "var(--purple)"}}>{ job['total_applicants'] ? job['total_applicants'] : '' }</span></p>
-                                  </div>
-                                  <div className="col-2" style={{display: 'flex', "justify-content": "flex-end"}}>
-                                      <button
-                                          className="btn btn-primary btn-sm"
-                                          style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}
-                                          onClick={() => {showVideoPopUP(job['recruiter'] ? job['recruiter']['name'] : 'Recruiter Information', job['recruiter'])}}
-                                      >View Recruiter</button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  ))
-              ) : (
-                  <>
-                  </>
-              )}
+              {/*{jobsListing.length > 0 ? (*/}
+              {/*    jobsListing.map((job) => (*/}
+              {/*        <div className="card" style={{"border-radius": "10px", "margin-bottom": "5px",}}>*/}
+              {/*            <div className="card-body p-1">*/}
+              {/*                <div className="row px-3 justify-content-between">*/}
+              {/*                    <div className="col-6">*/}
+              {/*                        <h5 style={{"margin-bottom": '0px !important', color: "var(--purple)"}}>{ job['job_title'] ? job['job_title'] : '' }</h5>*/}
+              {/*                    </div>*/}
+              {/*                    <div className="col-2">*/}
+              {/*                        <p style={{"font-size": '16px', "font-weight": "bold"}}>{ job['job_admin_status'] ? job['job_admin_status'] : '' }</p>*/}
+              {/*                    </div>*/}
+              {/*                    <div className="col-2">*/}
+              {/*                        <p style={{"font-size": '16px', "font-weight": "bold"}}>Applicants: <span style={{color: "var(--purple)"}}>{ job['total_applicants'] ? job['total_applicants'] : '' }</span></p>*/}
+              {/*                    </div>*/}
+              {/*                    <div className="col-2" style={{display: 'flex', "justify-content": "flex-end"}}>*/}
+              {/*                        <button*/}
+              {/*                            className="btn btn-primary btn-sm"*/}
+              {/*                            style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}*/}
+              {/*                            onClick={() => {showVideoPopUP(job['recruiter'] ? job['recruiter']['name'] : 'Recruiter Information', job['recruiter'])}}*/}
+              {/*                        >View Recruiter</button>*/}
+              {/*                    </div>*/}
+              {/*                </div>*/}
+              {/*            </div>*/}
+              {/*        </div>*/}
+              {/*    ))*/}
+              {/*) : (*/}
+              {/*    <>*/}
+              {/*    </>*/}
+              {/*)}*/}
           </CardContent>
         </Card>
-          <Card style={{border: "1px solid var(--purple)"}}>
-              <CardContent className="p-2" style={{display: 'flex', justifyContent: 'center'}}>
-                  <Pagination count={totalPages} page={page} onChange={handleChange} shape="rounded" />
-              </CardContent>
-          </Card>
       </div>
 
         <Popup
@@ -239,7 +262,7 @@ function Home(props) {
             hideOnOutsideClick={true}
             showCloseButton={false}
             showTitle={true}
-            title={videoPopUpTitle}
+            title={'Recruiter Information'}
             container=".dx-viewport"
             width="60vw"
             height="500px"

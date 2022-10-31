@@ -9,14 +9,16 @@ import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
 import { Popup, Position } from 'devextreme-react/popup';
 import ReactPlayer from "react-player";
-import DataGrid, {
-    Column,
-    Grouping,
-    GroupPanel,
-    Pager,
-    Paging,
-    SearchPanel,
-} from 'devextreme-react/data-grid';
+// import DataGrid, {
+//     Column,
+//     Grouping,
+//     GroupPanel,
+//     Pager,
+//     Paging,
+//     SearchPanel,
+// } from 'devextreme-react/data-grid';
+import Box from "@mui/material/Box";
+import {DataGrid, GridRenderCellParams} from '@mui/x-data-grid';
 
 function Users(props) {
     const [page, setPage] = React.useState(1);
@@ -35,6 +37,7 @@ function Users(props) {
         usersData(1, status);
     }, []);
     useEffect(() => {
+        console.log(props.userReducer.users);
         setUsers(
             (prev) => (prev = props.userReducer.users)
         );
@@ -53,9 +56,9 @@ function Users(props) {
         return null;
     };
 
-    const showVideoPopUP = (firstName, lastName, link) => {
-        setVideoPopUpTitle(firstName+' '+lastName);
-        setVideoPopUpLink(link);
+    const showVideoPopUP = (data) => {
+        setVideoPopUpTitle(data.row.first_name+' '+data.row.last_name);
+        setVideoPopUpLink(data.row.link);
         setVideoPopUp(true);
     };
     const hideVideoPopUP = () => {
@@ -73,13 +76,21 @@ function Users(props) {
         </div>;
     };
 
-    // const showVideoPopUP = async () => {
-    //     setVideoPopUp(false);
-    // };
-    //
-    // const hideVideoPopUP = async () => {
-    //     setVideoPopUp(false);
-    // };
+    const columns = [
+        { field: 'first_name', headerName: 'First Name', flex: 1 },
+        { field: 'last_name', headerName: 'Last Name', flex: 1 },
+        { field: 'num', headerName: 'Phone No.', flex: 1 },
+        { field: 'status', headerName: 'Status', flex: 1 },
+        {
+            headerName: 'Video',
+            flex: 1,
+            renderCell: (params: GridRenderCellParams<any>) => (
+                <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(params)}}>
+                    <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>
+                </IconButton>
+            ),
+        },
+    ];
 
     if (loading == false) {
         return <FullPageLoader />;
@@ -93,61 +104,43 @@ function Users(props) {
                         title="Users"
                     />
                     <CardContent>
-                        <DataGrid
-                            dataSource={users}
-                            allowColumnReordering={true}
-                            rowAlternationEnabled={true}
-                            showBorders={true}
-                            height="75vh"
-                        >
-                            <GroupPanel visible={true} />
-                            <SearchPanel visible={true} highlightCaseSensitive={true} width="20vw"/>
+                        <div style={{ display: 'flex', height: '100%' }}>
+                            <div style={{ flexGrow: 1 }}>
+                                <Box sx={{ height: '75vh', width: '100%' }}>
+                                    <DataGrid
+                                        getRowId={(row: any) => row.id}
+                                        rows={users}
+                                        pagination
+                                        pageSize={15}
+                                        columns={columns}
+                                    />
+                                </Box>
+                            </div>
+                        </div>
+                        {/*<DataGrid*/}
+                        {/*    dataSource={users}*/}
+                        {/*    allowColumnReordering={true}*/}
+                        {/*    rowAlternationEnabled={true}*/}
+                        {/*    showBorders={true}*/}
+                        {/*    height="75vh"*/}
+                        {/*>*/}
+                        {/*    <GroupPanel visible={true} />*/}
+                        {/*    <SearchPanel visible={true} highlightCaseSensitive={true} width="20vw"/>*/}
 
-                            <Column dataField="first_name" dataType="string" caption="First Name" />
-                            <Column dataField="last_name" dataType="string" caption="Last Name" />
-                            <Column dataField="num" dataType="string" caption="Phone No." />
-                            <Column dataField="status" dataType="string" />
-                            <Column dataField="Video"
-                                    width={100}
-                                    allowSorting={false}
-                                    cellRender={cellRenderShowVideo}
-                            />
-                            {/*<Column dataField="Customer" dataType="string" width={150} />*/}
+                        {/*    <Column dataField="first_name" dataType="string" caption="First Name" />*/}
+                        {/*    <Column dataField="last_name" dataType="string" caption="Last Name" />*/}
+                        {/*    <Column dataField="num" dataType="string" caption="Phone No." />*/}
+                        {/*    <Column dataField="status" dataType="string" />*/}
+                        {/*    <Column dataField="Video"*/}
+                        {/*            width={100}*/}
+                        {/*            allowSorting={false}*/}
+                        {/*            cellRender={cellRenderShowVideo}*/}
+                        {/*    />*/}
+                        {/*    /!*<Column dataField="Customer" dataType="string" width={150} />*!/*/}
 
-                            <Pager allowedPageSizes={[10, 20, 30]} showPageSizeSelector={true} showNavigationButtons={true} showInfo={true} displayMode={'full'} />
-                            <Paging defaultPageSize={10} />
-                        </DataGrid>
-
-                        {/*{users.length > 0 ? (*/}
-                        {/*    users.map((user) => (*/}
-                        {/*        <div key={user['link']} className="card" style={{"border-radius": "10px", "margin-bottom": "5px",}}>*/}
-                        {/*            <div className="card-body">*/}
-                        {/*                <div className="row" style={{"justify-content": "space-between"}}>*/}
-                        {/*                    <div className="col-xs-2 col-md-2 col-lg-2">*/}
-                        {/*                        <h5 style={{"margin-bottom": '0px !important', color: "var(--purple)"}}>{ user['first_name'] ? user['first_name'] : '' }</h5>*/}
-                        {/*                    </div>*/}
-                        {/*                    <div className="col-xs-2 col-md-2 col-lg-2">*/}
-                        {/*                        <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['last_name'] ? user['last_name'] : '' }</p>*/}
-                        {/*                    </div>*/}
-                        {/*                    <div className="col-xs-2 col-md-2 col-lg-2">*/}
-                        {/*                        <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['num'] ? user['num'] : '' }</p>*/}
-                        {/*                    </div>*/}
-                        {/*                    <div className="col-xs-1 col-md-1 col-lg-1">*/}
-                        {/*                        <p style={{"font-size": '15px', "font-weight": "500"}}>{ user['status'] ? user['status'] : '' }</p>*/}
-                        {/*                    </div>*/}
-                        {/*                    <div className="col-xs-1 col-md-1 col-lg-1">*/}
-                        {/*                        <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(user['first_name'], user['last_name'], user['link'])}}>*/}
-                        {/*                            <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>*/}
-                        {/*                        </IconButton>*/}
-                        {/*                    </div>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*    ))*/}
-                        {/*) : (*/}
-                        {/*    <>*/}
-                        {/*    </>*/}
-                        {/*)}*/}
+                        {/*    <Pager allowedPageSizes={[10, 20, 30]} showPageSizeSelector={true} showNavigationButtons={true} showInfo={true} displayMode={'full'} />*/}
+                        {/*    <Paging defaultPageSize={10} />*/}
+                        {/*</DataGrid>*/}
                     </CardContent>
                 </Card>
             </div>
