@@ -127,13 +127,29 @@ function Home(props) {
         { field: 'total_applicants', headerName: 'Applicants', flex: 1 },
         {
             headerName: 'Actions',
-            flex: 1,
+            flex: 2,
             renderCell: (params: GridRenderCellParams<any>) => (
-                <button
-                    className="btn btn-primary btn-sm"
-                    style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}
-                    onClick={() => {showVideoPopUP(params)}}
-                >View Recruiter</button>
+                <>
+                    <div style={{display: "flex", "justify-content": "space-between", width: "100%"}}>
+                        <button
+                            className="btn btn-success btn-sm"
+                            style={{color: "var(--light-purple)", border: 'none'}}
+                        >Accept</button>
+                        <button
+                            className="btn btn-danger btn-sm"
+                            style={{color: "var(--light-purple)", border: 'none'}}
+                        >Reject</button>
+                        <button
+                            className="btn btn-primary btn-sm"
+                            style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}
+                        >Job Details</button>
+                        <button
+                            className="btn btn-primary btn-sm"
+                            style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}
+                            onClick={() => {showVideoPopUP(params)}}
+                        >View Recruiter</button>
+                    </div>
+                </>
             ),
         },
     ];

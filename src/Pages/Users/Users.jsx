@@ -3,7 +3,7 @@ import "./Users.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from "react-redux";
 import FullPageLoader from "../../Components/fullpageloader/fullPageLoader";
-import {getUsers} from "../../actions/usersAction";
+import {getUsers, updateUserVideoStatus} from "../../actions/usersAction";
 import {Button, Card, CardContent} from "@mui/material";
 import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
@@ -56,6 +56,13 @@ function Users(props) {
         return null;
     };
 
+    const updateStatus = async (user, status) => {
+        await props.updateVideoStatus(user.row.id, status);
+        setLoading(false);
+        await props.getUsers(page, undefined);
+        return null;
+    };
+
     const showVideoPopUP = (data) => {
         setVideoPopUpTitle(data.row.first_name+' '+data.row.last_name);
         setVideoPopUpLink(data.row.link);
@@ -67,27 +74,28 @@ function Users(props) {
         setVideoPopUp(false);
     };
 
-    const cellRenderShowVideo = (data) => {
-        console.log(data);
-        return <div style={{width: "100%", display: "flex", "justify-content": "center"}}>
-            <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(data.data['first_name'], data.data['last_name'], data.data['link'])}}>
-                <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>
-            </IconButton>
-        </div>;
-    };
-
     const columns = [
         { field: 'first_name', headerName: 'First Name', flex: 1 },
         { field: 'last_name', headerName: 'Last Name', flex: 1 },
         { field: 'num', headerName: 'Phone No.', flex: 1 },
         { field: 'status', headerName: 'Status', flex: 1 },
         {
-            headerName: 'Video',
-            flex: 1,
+            headerName: 'Actions',
+            width: 200,
             renderCell: (params: GridRenderCellParams<any>) => (
-                <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(params)}}>
-                    <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>
-                </IconButton>
+                <>
+                    <div style={{display: "flex", "justify-content": "space-between", width: "100%"}}>
+                        <IconButton aria-label="delete" size="small" onClick={() => {updateStatus(params, 1)}}>
+                            <i className="fas fa-check" style={{color: "green", "font-size": "20px"}}></i>
+                        </IconButton>
+                        <IconButton aria-label="delete" size="small" onClick={() => {updateStatus(params, 0)}}>
+                            <i className="fas fa-plus" style={{color: "red", "font-size": "20px", transform: "rotate(45deg)"}}></i>
+                        </IconButton>
+                        <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(params)}}>
+                            <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>
+                        </IconButton>
+                    </div>
+                </>
             ),
         },
     ];
@@ -108,7 +116,7 @@ function Users(props) {
                             <div style={{ flexGrow: 1 }}>
                                 <Box sx={{ height: '75vh', width: '100%' }}>
                                     <DataGrid
-                                        getRowId={(row: any) => row.id}
+                                        getRowId={(row: any) => row.id+row.first_name}
                                         rows={users}
                                         pagination
                                         pageSize={15}
@@ -183,5 +191,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getUsers: (page, admin_status) =>
         dispatch(getUsers(page, admin_status)),
+    updateVideoStatus: (id, status) =>
+        dispatch(updateUserVideoStatus(id, status)),
+
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

@@ -29,7 +29,7 @@ function Login(props) {
     const reg =
       /^([a-zA-Z0-9~`!@#\$%\^&\*\(\)_\-\+={\[\}\]\|\\:;"'<,>\.\?\/  ]*)@([a-zA-Z]+)\.([a-zA-Z]+).([a-zA-Z]+)$/;
     if (username == "") {
-      setSnackMessage('Username required');
+      setSnackMessage('Username or Email required');
       setSnackSeverity('error');
       setSnackOpen(true);
       setLoginInProgress(false);

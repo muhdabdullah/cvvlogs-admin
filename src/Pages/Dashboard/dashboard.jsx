@@ -7,10 +7,12 @@ import FullPageLoader from "../../Components/fullpageloader/fullPageLoader";
 import Chart, {
     ArgumentAxis,
     Series,
-    Legend, Size, CommonAxisSettings, Label, Grid, ValueAxis, CommonSeriesSettings, Format, Export
+    Legend, Size, CommonAxisSettings, Label, Grid, ValueAxis, CommonSeriesSettings, Format, Export, Connector
 } from 'devextreme-react/chart';
 import {getDashboard} from "../../actions/homepageAction";
 import axios from "axios";
+import {PieChart} from "devextreme-react";
+import {Tooltip} from "@mui/material";
 
 
 function Dashboard(props) {
@@ -23,6 +25,7 @@ function Dashboard(props) {
     const [monthlyStatsDataTotalVerifiedRecruiter, setMonthlyStatsDataTotalVerifiedRecruiter] = useState({});
     const [monthlyDeviceTypeUserData, setMonthlyDeviceTypeUserData] = useState({});
     const [monthlyDeviceTypeRecruitersData, setMonthlyDeviceTypeRecruitersData] = useState({});
+    const [piechartUserData, setPiechartUserData] = useState([]);
 
     useEffect(() => {
         dashboardData(1, status);
@@ -58,6 +61,22 @@ function Dashboard(props) {
                     setMonthlyStatsDataTotalVerifiedUsers(response.data.total_verified_users);
                     setMonthlyStatsDataTotalRecruiter(response.data.total_recruiter);
                     setMonthlyStatsDataTotalVerifiedRecruiter(response.data.total_verified_recruiter);
+
+                    let piechartUsers = [
+                        {
+                            region: 'Android Users',
+                            val: response.data.total_android_users
+                        },
+                        {
+                            region: 'IOS Users',
+                            val: response.data.total_ios_users
+                        },
+                        {
+                            region: 'Web Users',
+                            val: response.data.total_web_users
+                        }
+                    ];
+                    setPiechartUserData(piechartUsers);
 
                     // Setting Device Type Users Graph Data Source
                     let deviceUsers = [];
@@ -101,6 +120,34 @@ function Dashboard(props) {
         <>
             {/*<Nav2 />*/}
             <div className="container-fluid">
+                <div className="row mt-3">
+                    <div className="col-lg-6">
+                        <div className="card custom-card">
+                            <div className="card-body" style={{height: '100%',}}>
+                                <PieChart
+                                    id="pie"
+                                    type="doughnut"
+                                    title="The Population of Continents and Regions"
+                                    palette="material"
+                                    dataSource={piechartUserData}
+                                >
+                                    <Series argumentField="region">
+                                        <Label visible={true} >
+                                            <Connector visible={true} />
+                                        </Label>
+                                    </Series>
+                                    {/*<Export enabled={true} />*/}
+                                    <Legend
+                                        margin={0}
+                                        horizontalAlignment="right"
+                                        verticalAlignment="top"
+                                    />
+                                </PieChart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="row mt-3">
                     <div className="col-2">
                         <div className="card custom-card row-animation">
