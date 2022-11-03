@@ -38,12 +38,18 @@ const options = [
     'Rejected Jobs'
 ];
 
+const jobStatusOptions = [
+    'Pending',
+    'Approved',
+    'Rejected'
+];
+
 
 function Home(props) {
   const [page, setPage] = React.useState(1);
   const [jobsListing, setJobsListing] = useState([]);
   const [jobsLength, setJobsLength] = useState(0);
-  const [status, setStatus] = useState(undefined);
+  const [status, setStatus] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
     const [videoPopUp, setVideoPopUp] = useState(false);
@@ -51,6 +57,13 @@ function Home(props) {
     const [videoPopUpData, setVideoPopUpData] = useState({});
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+    // JOB STATUS CHANGE
+    const [anchorElJob, setAnchorElJob] = React.useState(null);
+    const [selectedIndexJob, setSelectedIndexJob] = React.useState(0);
+
+    // SELECTED ROWS
+    const [selectionModel, setSelectionModel] = React.useState([]);
 
   useEffect(() => {
     dashboardData(page, status);
@@ -84,7 +97,7 @@ function Home(props) {
                 "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
             },
             body: JSON.stringify({
-                id: params['id'],
+                id: params,
                 status: jobstatus,
             }),
         })
@@ -132,21 +145,52 @@ function Home(props) {
         setSelectedIndex(index);
         setAnchorEl(null);
         if (index === 0) {
-            setStatus((prev) => (prev = undefined));
+            setStatus((prev) => (prev = 0));
             dashboardData(1, 0);
         }
         if (index === 1) {
-            setStatus((prev) => (prev = undefined));
+            setStatus((prev) => (prev = 1));
             dashboardData(1, 1);
         }
         if (index === 2) {
-            setStatus((prev) => (prev = undefined));
+            setStatus((prev) => (prev = 2));
             dashboardData(1, 2);
         }
     };
 
     const handleCloseMenu = () => {
         setAnchorEl(null);
+    };
+
+
+    // JOB STATUS CHANGE
+    const openJob = Boolean(anchorElJob);
+    const handleClickListItemJobStatus = (event) => {
+        setAnchorElJob(event.currentTarget);
+    };
+
+    const handleMenuItemClickJob = (event, index) => {
+        setSelectedIndexJob(index);
+        setAnchorEl(null);
+        if (index === 0) {
+            updateJobStatus(selectionModel, 0);
+            setLoading(false);
+            dashboardData(1, status);
+        }
+        if (index === 1) {
+            updateJobStatus(selectionModel, 1);
+            setLoading(false);
+            dashboardData(1, status);
+        }
+        if (index === 2) {
+            updateJobStatus(selectionModel, 2);
+            setLoading(false);
+            dashboardData(1, status);
+        }
+    };
+
+    const handleCloseMenuJob = () => {
+        setAnchorElJob(null);
     };
 
     const columns = [
@@ -182,12 +226,12 @@ function Home(props) {
                         <button
                             className="btn btn-success btn-sm"
                             style={{color: "var(--light-purple)", border: 'none'}}
-                            onClick={() => {updateJobStatus(params, 1)}}
+                            onClick={() => {updateJobStatus([params.id], 1)}}
                         >Accept</button>
                         <button
                             className="btn btn-danger btn-sm"
                             style={{color: "var(--light-purple)", border: 'none'}}
-                            onClick={() => {updateJobStatus(params, 2)}}
+                            onClick={() => {updateJobStatus([params.id], 2)}}
                         >Reject</button>
                         <button
                             className="btn btn-primary btn-sm"
@@ -217,53 +261,105 @@ function Home(props) {
               action={
                   <>
                       <div className="filter-btn-container">
-                          <List
-                              component="nav"
-                              aria-label="Filters settings"
-                              sx={{ bgcolor: 'var(--purple)' }}
-                          >
-                              <ListItem
-                                  button
-                                  id="lock-button"
-                                  aria-haspopup="listbox"
-                                  aria-controls="lock-menu"
-                                  aria-expanded={open ? 'true' : undefined}
-                                  onClick={handleClickListItem}
+                          <div>
+                              <List
+                                  component="nav"
+                                  aria-label="Filters settings"
+                                  sx={{ bgcolor: 'var(--purple)' }}
                               >
-                                  <Button
-                                      id="demo-customized-button"
-                                      aria-controls={open ? 'demo-customized-menu' : undefined}
-                                      aria-haspopup="true"
+                                  <ListItem
+                                      button
+                                      id="lock-button"
+                                      aria-haspopup="listbox"
+                                      aria-controls="lock-menu"
+                                      aria-expanded={openJob ? 'true' : undefined}
+                                      onClick={handleClickListItemJobStatus}
+                                  >
+                                      <Button
+                                          id="demo-customized-button"
+                                          aria-controls={openJob ? 'demo-customized-menu' : undefined}
+                                          aria-haspopup="true"
+                                          aria-expanded={openJob ? 'true' : undefined}
+                                          variant="contained"
+                                          disableElevation
+                                          // onClick={handleClick}
+                                          endIcon={<KeyboardArrowDownIcon />}
+                                      >
+                                          Change Status
+                                      </Button>
+                                  </ListItem>
+                              </List>
+                              <Menu
+                                  id="lock-menu"
+                                  anchorEl={anchorElJob}
+                                  open={openJob}
+                                  onClose={handleCloseMenuJob}
+                                  MenuListProps={{
+                                      'aria-labelledby': 'lock-button',
+                                      role: 'listbox',
+                                  }}
+                              >
+                                  {jobStatusOptions.map((option, index) => (
+                                      <MenuItem
+                                          key={option}
+                                          selected={index === selectedIndexJob}
+                                          onClick={(event) => handleMenuItemClickJob(event, index)}
+                                      >
+                                          {option}
+                                      </MenuItem>
+                                  ))}
+                              </Menu>
+                          </div>
+
+                          <div>
+                              <List
+                                  component="nav"
+                                  aria-label="Filters settings"
+                                  sx={{ bgcolor: 'var(--purple)' }}
+                              >
+                                  <ListItem
+                                      button
+                                      id="lock-button"
+                                      aria-haspopup="listbox"
+                                      aria-controls="lock-menu"
                                       aria-expanded={open ? 'true' : undefined}
-                                      variant="contained"
-                                      disableElevation
-                                      // onClick={handleClick}
-                                      endIcon={<KeyboardArrowDownIcon />}
+                                      onClick={handleClickListItem}
                                   >
-                                      Filters
-                                  </Button>
-                              </ListItem>
-                          </List>
-                          <Menu
-                              id="lock-menu"
-                              anchorEl={anchorEl}
-                              open={open}
-                              onClose={handleCloseMenu}
-                              MenuListProps={{
-                                  'aria-labelledby': 'lock-button',
-                                  role: 'listbox',
-                              }}
-                          >
-                              {options.map((option, index) => (
-                                  <MenuItem
-                                      key={option}
-                                      selected={index === selectedIndex}
-                                      onClick={(event) => handleMenuItemClick(event, index)}
-                                  >
-                                      {option}
-                                  </MenuItem>
-                              ))}
-                          </Menu>
+                                      <Button
+                                          id="demo-customized-button"
+                                          aria-controls={open ? 'demo-customized-menu' : undefined}
+                                          aria-haspopup="true"
+                                          aria-expanded={open ? 'true' : undefined}
+                                          variant="contained"
+                                          disableElevation
+                                          // onClick={handleClick}
+                                          endIcon={<KeyboardArrowDownIcon />}
+                                      >
+                                          Filters
+                                      </Button>
+                                  </ListItem>
+                              </List>
+                              <Menu
+                                  id="lock-menu"
+                                  anchorEl={anchorEl}
+                                  open={open}
+                                  onClose={handleCloseMenu}
+                                  MenuListProps={{
+                                      'aria-labelledby': 'lock-button',
+                                      role: 'listbox',
+                                  }}
+                              >
+                                  {options.map((option, index) => (
+                                      <MenuItem
+                                          key={option}
+                                          selected={index === selectedIndex}
+                                          onClick={(event) => handleMenuItemClick(event, index)}
+                                      >
+                                          {option}
+                                      </MenuItem>
+                                  ))}
+                              </Menu>
+                          </div>
                       </div>
                   </>
               }
@@ -273,7 +369,7 @@ function Home(props) {
                   <div style={{ flexGrow: 1 }}>
                       <Box sx={{ height: '75vh', width: '100%' }}>
                           <DataGrid
-                              getRowId={(row: any) => row.job_id+row.job_title}
+                              getRowId={(row: any) => row.job_id}
                               rows={jobsListing}
                               rowCount={jobsLength}
                               rowsPerPageOptions={[15]}
@@ -281,6 +377,11 @@ function Home(props) {
                               page={page}
                               pageSize={15}
                               paginationMode="server"
+                              checkboxSelection={true}
+                              onSelectionModelChange={(newSelectionModel) => {
+                                  setSelectionModel(newSelectionModel);
+                              }}
+                              selectionModel={selectionModel}
                               onPageChange={(newPage) => handleChange(newPage)}
                               columns={columns}
                           />
