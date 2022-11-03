@@ -52,8 +52,6 @@ export const updateUserVideoStatus = (id, status) => {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log('AGAYA');
-                console.log(response);
                 if (response.success) {
                     dispatch({
                         type: "GET_USERS",

@@ -120,33 +120,33 @@ function Dashboard(props) {
         <>
             {/*<Nav2 />*/}
             <div className="container-fluid">
-                <div className="row mt-3">
-                    <div className="col-lg-6">
-                        <div className="card custom-card">
-                            <div className="card-body" style={{height: '100%',}}>
-                                <PieChart
-                                    id="pie"
-                                    type="doughnut"
-                                    title="The Population of Continents and Regions"
-                                    palette="material"
-                                    dataSource={piechartUserData}
-                                >
-                                    <Series argumentField="region">
-                                        <Label visible={true} >
-                                            <Connector visible={true} />
-                                        </Label>
-                                    </Series>
-                                    {/*<Export enabled={true} />*/}
-                                    <Legend
-                                        margin={0}
-                                        horizontalAlignment="right"
-                                        verticalAlignment="top"
-                                    />
-                                </PieChart>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {/*<div className="row mt-3">*/}
+                {/*    <div className="col-lg-6">*/}
+                {/*        <div className="card custom-card">*/}
+                {/*            <div className="card-body" style={{height: '100%',}}>*/}
+                {/*                <PieChart*/}
+                {/*                    id="pie"*/}
+                {/*                    type="doughnut"*/}
+                {/*                    title="The Population of Continents and Regions"*/}
+                {/*                    palette="material"*/}
+                {/*                    dataSource={piechartUserData}*/}
+                {/*                >*/}
+                {/*                    <Series argumentField="region">*/}
+                {/*                        <Label visible={true} >*/}
+                {/*                            <Connector visible={true} />*/}
+                {/*                        </Label>*/}
+                {/*                    </Series>*/}
+                {/*                    /!*<Export enabled={true} />*!/*/}
+                {/*                    <Legend*/}
+                {/*                        margin={0}*/}
+                {/*                        horizontalAlignment="right"*/}
+                {/*                        verticalAlignment="top"*/}
+                {/*                    />*/}
+                {/*                </PieChart>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
                 <div className="row mt-3">
                     <div className="col-2">

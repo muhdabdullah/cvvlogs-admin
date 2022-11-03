@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from "react-redux";
 import FullPageLoader from "../../Components/fullpageloader/fullPageLoader";
 import {getUsers, updateUserVideoStatus} from "../../actions/usersAction";
-import {Button, Card, CardContent} from "@mui/material";
+import {Button, Card, CardContent, ListItem, Menu, MenuItem} from "@mui/material";
 import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
 import { Popup, Position } from 'devextreme-react/popup';
@@ -19,6 +19,14 @@ import ReactPlayer from "react-player";
 // } from 'devextreme-react/data-grid';
 import Box from "@mui/material/Box";
 import {DataGrid, GridRenderCellParams} from '@mui/x-data-grid';
+import List from "@mui/material/List";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+const options = [
+    'Pending',
+    'Approved',
+    'Rejected'
+];
 
 function Users(props) {
     const [page, setPage] = React.useState(1);
@@ -32,6 +40,10 @@ function Users(props) {
     const [videoPopUp, setVideoPopUp] = useState(false);
     const [videoPopUpTitle, setVideoPopUpTitle] = useState('');
     const [videoPopUpLink, setVideoPopUpLink] = useState('');
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+
 
     useEffect(() => {
         usersData(1, status);
@@ -74,6 +86,33 @@ function Users(props) {
         setVideoPopUp(false);
     };
 
+    // MENU
+    const open = Boolean(anchorEl);
+    const handleClickListItem = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
+
+    const handleMenuItemClick = (event, index) => {
+        setSelectedIndex(index);
+        setAnchorEl(null);
+        // if (index === 0) {
+        //     setStatus((prev) => (prev = undefined));
+        //     usersData(1, 0);
+        // }
+        // if (index === 1) {
+        //     setStatus((prev) => (prev = undefined));
+        //     usersData(1, 1);
+        // }
+        // if (index === 2) {
+        //     setStatus((prev) => (prev = undefined));
+        //     usersData(1, 2);
+        // }
+    };
+
     const columns = [
         { field: 'first_name', headerName: 'First Name', flex: 1 },
         { field: 'last_name', headerName: 'Last Name', flex: 1 },
@@ -85,15 +124,30 @@ function Users(props) {
             renderCell: (params: GridRenderCellParams<any>) => (
                 <>
                     <div style={{display: "flex", "justify-content": "space-between", width: "100%"}}>
-                        <IconButton aria-label="delete" size="small" onClick={() => {updateStatus(params, 1)}}>
-                            <i className="fas fa-check" style={{color: "green", "font-size": "20px"}}></i>
-                        </IconButton>
-                        <IconButton aria-label="delete" size="small" onClick={() => {updateStatus(params, 0)}}>
-                            <i className="fas fa-plus" style={{color: "red", "font-size": "20px", transform: "rotate(45deg)"}}></i>
-                        </IconButton>
-                        <IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(params)}}>
-                            <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>
-                        </IconButton>
+                        <button
+                            className="btn btn-success btn-sm"
+                            style={{color: "var(--light-purple)", border: 'none'}}
+                            onClick={() => {updateStatus(params, 2)}}
+                        >Accept</button>
+                        <button
+                            className="btn btn-danger btn-sm"
+                            style={{color: "var(--light-purple)", border: 'none'}}
+                            onClick={() => {updateStatus(params, 3)}}
+                        >Reject</button>
+                        <button
+                            className="btn btn-primary btn-sm"
+                            style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}
+                            onClick={() => {showVideoPopUP(params)}}
+                        >Video</button>
+                        {/*<IconButton aria-label="delete" size="small" onClick={() => {updateStatus(params, 2)}}>*/}
+                        {/*    <i className="fas fa-check" style={{color: "green", "font-size": "20px"}}></i>*/}
+                        {/*</IconButton>*/}
+                        {/*<IconButton aria-label="delete" size="small" onClick={() => {updateStatus(params, 3)}}>*/}
+                        {/*    <i className="fas fa-plus" style={{color: "red", "font-size": "20px", transform: "rotate(45deg)"}}></i>*/}
+                        {/*</IconButton>*/}
+                        {/*<IconButton aria-label="delete" size="small" onClick={() => {showVideoPopUP(params)}}>*/}
+                        {/*    <i className="fas fa-video" style={{color: "var(--purple)", "font-size": "20px"}}></i>*/}
+                        {/*</IconButton>*/}
                     </div>
                 </>
             ),
@@ -110,6 +164,59 @@ function Users(props) {
                     <CardHeader
                         className="custom-card-header"
                         title="Users"
+                        action={
+                            <>
+                                <div className="filter-btn-container">
+                                    <List
+                                        component="nav"
+                                        aria-label="Filters settings"
+                                        sx={{ bgcolor: 'var(--purple)' }}
+                                    >
+                                        <ListItem
+                                            button
+                                            id="lock-button"
+                                            aria-haspopup="listbox"
+                                            aria-controls="lock-menu"
+                                            aria-expanded={open ? 'true' : undefined}
+                                            onClick={handleClickListItem}
+                                        >
+                                            <Button
+                                                id="demo-customized-button"
+                                                aria-controls={open ? 'demo-customized-menu' : undefined}
+                                                aria-haspopup="true"
+                                                aria-expanded={open ? 'true' : undefined}
+                                                variant="contained"
+                                                disableElevation
+                                                // onClick={handleClick}
+                                                endIcon={<KeyboardArrowDownIcon />}
+                                            >
+                                                Filters
+                                            </Button>
+                                        </ListItem>
+                                    </List>
+                                    <Menu
+                                        id="lock-menu"
+                                        anchorEl={anchorEl}
+                                        open={open}
+                                        onClose={handleCloseMenu}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'lock-button',
+                                            role: 'listbox',
+                                        }}
+                                    >
+                                        {options.map((option, index) => (
+                                            <MenuItem
+                                                key={option}
+                                                selected={index === selectedIndex}
+                                                onClick={(event) => handleMenuItemClick(event, index)}
+                                            >
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </Menu>
+                                </div>
+                            </>
+                        }
                     />
                     <CardContent>
                         <div style={{ display: 'flex', height: '100%' }}>

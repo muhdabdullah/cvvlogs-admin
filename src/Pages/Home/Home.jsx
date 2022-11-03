@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { getDashboard } from "../../actions/dashboardAction";
+import {getDashboard, updateJobStatus, updateJobStatusAdmin} from "../../actions/dashboardAction";
 import { connect } from "react-redux";
 import { getDeleteJob } from "../../actions/deleteJobAction";
 import FullPageLoader from "../../Components/fullpageloader/fullPageLoader";
@@ -33,9 +33,9 @@ import Box from "@mui/material/Box";
 import {GridRenderCellParams} from "@mui/x-data-grid";
 
 const options = [
-    'All Jobs',
     'Pending Jobs',
-    'Posted Jobs'
+    'Approved Jobs',
+    'Rejected Jobs'
 ];
 
 
@@ -76,7 +76,37 @@ function Home(props) {
     return null;
   };
 
-  const handleChange = (value) => {
+    const updateJobStatus = async (params, jobstatus) => {
+        fetch(`${process.env.REACT_APP_API_END_POINT}/update-job-approve-status`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+            },
+            body: JSON.stringify({
+                id: params['id'],
+                status: jobstatus,
+            }),
+        })
+            .then((res) => res.json())
+            .then((response) => {
+                console.log('AGAYA');
+                console.log(response);
+                if (response.success) {
+                    setLoading(false);
+                    dashboardData(page, status);
+                } else {
+                    alert(response.message);
+                }
+            })
+            .catch((error) => {
+                console.log("error", error);
+            });
+        return null;
+    };
+
+
+    const handleChange = (value) => {
     setPage(value);
     dashboardData(value, status);
   };
@@ -103,15 +133,15 @@ function Home(props) {
         setAnchorEl(null);
         if (index === 0) {
             setStatus((prev) => (prev = undefined));
-            dashboardData(1, undefined);
+            dashboardData(1, 0);
         }
         if (index === 1) {
             setStatus((prev) => (prev = undefined));
-            dashboardData(1, 0);
+            dashboardData(1, 1);
         }
         if (index === 2) {
             setStatus((prev) => (prev = undefined));
-            dashboardData(1, 1);
+            dashboardData(1, 2);
         }
     };
 
@@ -121,8 +151,26 @@ function Home(props) {
 
     const columns = [
         { field: 'job_title', headerName: 'Title', flex: 1 },
-        { field: 'city', headerName: 'City', flex: 1 },
-        { field: 'country', headerName: 'Country', flex: 1 },
+        {
+            field: 'city',
+            headerName: 'City',
+            flex: 1,
+            renderCell: (params: GridRenderCellParams<any>) => (
+                <>
+                    <span>{params['row'].city ? params['row'].city.name : ''}</span>
+                </>
+            ),
+        },
+        {
+            field: 'country',
+            headerName: 'Country',
+            flex: 1,
+            renderCell: (params: GridRenderCellParams<any>) => (
+                <>
+                    <span>{params['row'].country ? params['row'].country.name : ''}</span>
+                </>
+            ),
+        },
         { field: 'job_admin_status', headerName: 'Status', flex: 1 },
         { field: 'total_applicants', headerName: 'Applicants', flex: 1 },
         {
@@ -134,10 +182,12 @@ function Home(props) {
                         <button
                             className="btn btn-success btn-sm"
                             style={{color: "var(--light-purple)", border: 'none'}}
+                            onClick={() => {updateJobStatus(params, 1)}}
                         >Accept</button>
                         <button
                             className="btn btn-danger btn-sm"
                             style={{color: "var(--light-purple)", border: 'none'}}
+                            onClick={() => {updateJobStatus(params, 2)}}
                         >Reject</button>
                         <button
                             className="btn btn-primary btn-sm"
@@ -223,7 +273,7 @@ function Home(props) {
                   <div style={{ flexGrow: 1 }}>
                       <Box sx={{ height: '75vh', width: '100%' }}>
                           <DataGrid
-                              getRowId={(row: any) => row.job_id}
+                              getRowId={(row: any) => row.job_id+row.job_title}
                               rows={jobsListing}
                               rowCount={jobsLength}
                               rowsPerPageOptions={[15]}
