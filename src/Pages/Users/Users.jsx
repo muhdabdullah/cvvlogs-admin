@@ -31,11 +31,10 @@ const options = [
 function Users(props) {
     const [page, setPage] = React.useState(1);
     const [users, setUsers] = useState([]);
-    const [usersLength, setUsersLength] = useState(0);
     const [status, setStatus] = useState(undefined);
     const [isMoreData, setIsMoreData] = useState(false);
     const [nextPage, setNext_page] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalUsers, setTotalUsers] = useState(0);
     const [loading, setLoading] = useState(false);
     const [videoPopUp, setVideoPopUp] = useState(false);
     const [videoPopUpTitle, setVideoPopUpTitle] = useState('');
@@ -51,14 +50,14 @@ function Users(props) {
     useEffect(() => {
         console.log(props.userReducer.users);
         setUsers(
-            (prev) => (prev = props.userReducer.users)
+            (prev) => (prev = props.userReducer.users.data)
         );
-        setUsersLength(
-            (prev) => (prev = props.userReducer.users.length)
-        );
-        // setTotalPages(
-        //     (prev) => (prev = props.userReducer.users.total_pages)
+        // setUsersLength(
+        //     (prev) => (prev = props.userReducer.users.data.length)
         // );
+        setTotalUsers(
+            (prev) => (prev = props.userReducer.users.total)
+        );
         setLoading((prev) => (prev = props.userReducer.loading));
     }, [props.userReducer]);
 
@@ -68,16 +67,15 @@ function Users(props) {
         return null;
     };
 
-    const updateStatus = async (user, status) => {
-        await props.updateVideoStatus(user.row.id, status);
-        setLoading(false);
-        await props.getUsers(page, undefined);
+    const updateStatus = async (user, jobStatusChange) => {
+        await props.updateVideoStatus(user['row'].id, jobStatusChange);
+        usersData(page, status);
         return null;
     };
 
     const showVideoPopUP = (data) => {
-        setVideoPopUpTitle(data.row.first_name+' '+data.row.last_name);
-        setVideoPopUpLink(data.row.link);
+        setVideoPopUpTitle(data['row'].first_name+' '+data['row'].last_name);
+        setVideoPopUpLink(data['row'].link);
         setVideoPopUp(true);
     };
     const hideVideoPopUP = () => {
@@ -113,6 +111,11 @@ function Users(props) {
         // }
     };
 
+    const handleChange = (value) => {
+        setPage(value);
+        usersData(value, status);
+    };
+
     const columns = [
         { field: 'first_name', headerName: 'First Name', flex: 1 },
         { field: 'last_name', headerName: 'Last Name', flex: 1 },
@@ -120,21 +123,24 @@ function Users(props) {
         { field: 'status', headerName: 'Status', flex: 1 },
         {
             headerName: 'Actions',
-            width: 200,
+            width: 250,
             renderCell: (params: GridRenderCellParams<any>) => (
                 <>
                     <div style={{display: "flex", "justify-content": "space-between", width: "100%"}}>
                         <button
+                            key={params.row.id}
                             className="btn btn-success btn-sm"
                             style={{color: "var(--light-purple)", border: 'none'}}
                             onClick={() => {updateStatus(params, 2)}}
                         >Accept</button>
                         <button
+                            key={params.row.id}
                             className="btn btn-danger btn-sm"
                             style={{color: "var(--light-purple)", border: 'none'}}
                             onClick={() => {updateStatus(params, 3)}}
                         >Reject</button>
                         <button
+                            key={params.row.id}
                             className="btn btn-primary btn-sm"
                             style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}
                             onClick={() => {showVideoPopUP(params)}}
@@ -160,12 +166,11 @@ function Users(props) {
     return (
         <>
             <div className="container-fluid">
-                <Card sx={{ minWidth: 275 }}>
-                    <CardHeader
-                        className="custom-card-header"
-                        title="Users"
-                        action={
-                            <>
+                <div className="card custom-main-card-styling">
+                    <div className="card-header" style={{"background-color": "var(--purple)"}}>
+                        <div style={{width: "100%", display: "flex", "justify-content": "space-between"}}>
+                            <h3 className="m-0" style={{color: "#FFFFFF", "align-self": "center"}}><b>Users</b></h3>
+                            <div>
                                 <div className="filter-btn-container">
                                     <List
                                         component="nav"
@@ -215,49 +220,31 @@ function Users(props) {
                                         ))}
                                     </Menu>
                                 </div>
-                            </>
-                        }
-                    />
-                    <CardContent>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card-body">
                         <div style={{ display: 'flex', height: '100%' }}>
                             <div style={{ flexGrow: 1 }}>
                                 <Box sx={{ height: '75vh', width: '100%' }}>
                                     <DataGrid
-                                        getRowId={(row: any) => row.id+row.first_name}
+                                        getRowId={(row: any) => row.id}
                                         rows={users}
+                                        rowCount={totalUsers}
+                                        rowsPerPageOptions={[15]}
                                         pagination
+                                        page={page}
                                         pageSize={15}
+                                        paginationMode="server"
+                                        disableSelectionOnClick={true}
+                                        onPageChange={(newPage) => handleChange(newPage)}
                                         columns={columns}
                                     />
                                 </Box>
                             </div>
                         </div>
-                        {/*<DataGrid*/}
-                        {/*    dataSource={users}*/}
-                        {/*    allowColumnReordering={true}*/}
-                        {/*    rowAlternationEnabled={true}*/}
-                        {/*    showBorders={true}*/}
-                        {/*    height="75vh"*/}
-                        {/*>*/}
-                        {/*    <GroupPanel visible={true} />*/}
-                        {/*    <SearchPanel visible={true} highlightCaseSensitive={true} width="20vw"/>*/}
-
-                        {/*    <Column dataField="first_name" dataType="string" caption="First Name" />*/}
-                        {/*    <Column dataField="last_name" dataType="string" caption="Last Name" />*/}
-                        {/*    <Column dataField="num" dataType="string" caption="Phone No." />*/}
-                        {/*    <Column dataField="status" dataType="string" />*/}
-                        {/*    <Column dataField="Video"*/}
-                        {/*            width={100}*/}
-                        {/*            allowSorting={false}*/}
-                        {/*            cellRender={cellRenderShowVideo}*/}
-                        {/*    />*/}
-                        {/*    /!*<Column dataField="Customer" dataType="string" width={150} />*!/*/}
-
-                        {/*    <Pager allowedPageSizes={[10, 20, 30]} showPageSizeSelector={true} showNavigationButtons={true} showInfo={true} displayMode={'full'} />*/}
-                        {/*    <Paging defaultPageSize={10} />*/}
-                        {/*</DataGrid>*/}
-                    </CardContent>
-                </Card>
+                    </div>
+                </div>
             </div>
 
             <Popup

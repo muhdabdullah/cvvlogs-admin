@@ -39,7 +39,7 @@ const options = [
 ];
 
 const jobStatusOptions = [
-    'Pending',
+    // 'Pending',
     'Approved',
     'Rejected'
 ];
@@ -66,7 +66,8 @@ function Home(props) {
     const [selectionModel, setSelectionModel] = React.useState([]);
 
   useEffect(() => {
-    dashboardData(page, status);
+      setPage(1);
+    dashboardData(1, status);
   }, []);
 
   useEffect(() => {
@@ -103,8 +104,8 @@ function Home(props) {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log('AGAYA');
-                console.log(response);
+                // console.log('AGAYA');
+                // console.log(response);
                 if (response.success) {
                     setLoading(false);
                     dashboardData(page, status);
@@ -171,22 +172,22 @@ function Home(props) {
 
     const handleMenuItemClickJob = (event, index) => {
         setSelectedIndexJob(index);
-        setAnchorEl(null);
+        // if (index === 0) {
+        //     updateJobStatus(selectionModel, 0);
+        //     setLoading(false);
+        //     dashboardData(1, status);
+        // }
         if (index === 0) {
-            updateJobStatus(selectionModel, 0);
-            setLoading(false);
-            dashboardData(1, status);
-        }
-        if (index === 1) {
             updateJobStatus(selectionModel, 1);
             setLoading(false);
-            dashboardData(1, status);
+            dashboardData(page, status);
         }
-        if (index === 2) {
+        if (index === 1) {
             updateJobStatus(selectionModel, 2);
             setLoading(false);
-            dashboardData(1, status);
+            dashboardData(page, status);
         }
+        setAnchorElJob(null);
     };
 
     const handleCloseMenuJob = () => {
@@ -254,172 +255,308 @@ function Home(props) {
   return (
     <>
       <div className="container-fluid">
-        <Card sx={{ minWidth: 275 }}>
-          <CardHeader
-              className="custom-card-header"
-              title="Jobs Listed"
-              action={
-                  <>
-                      <div className="filter-btn-container">
-                          <div>
-                              <List
-                                  component="nav"
-                                  aria-label="Filters settings"
-                                  sx={{ bgcolor: 'var(--purple)' }}
-                              >
-                                  <ListItem
-                                      button
-                                      id="lock-button"
-                                      aria-haspopup="listbox"
-                                      aria-controls="lock-menu"
-                                      aria-expanded={openJob ? 'true' : undefined}
-                                      onClick={handleClickListItemJobStatus}
+          <div className="card custom-main-card-styling">
+              <div className="card-header" style={{"background-color": "var(--purple)"}}>
+                  <div style={{width: "100%", display: "flex", "justify-content": "space-between"}}>
+                      <h3 className="m-0" style={{color: "#FFFFFF", "align-self": "center"}}><b>Jobs Listed</b></h3>
+                      <div>
+                          <div className="filter-btn-container">
+                              <div>
+                                  <List
+                                      component="nav"
+                                      aria-label="Filters settings"
+                                      sx={{ bgcolor: 'var(--purple)' }}
                                   >
-                                      <Button
-                                          id="demo-customized-button"
-                                          aria-controls={openJob ? 'demo-customized-menu' : undefined}
-                                          aria-haspopup="true"
+                                      <ListItem
+                                          button
+                                          id="lock-button"
+                                          aria-haspopup="listbox"
+                                          aria-controls="lock-menu"
                                           aria-expanded={openJob ? 'true' : undefined}
-                                          variant="contained"
-                                          disableElevation
-                                          // onClick={handleClick}
-                                          endIcon={<KeyboardArrowDownIcon />}
+                                          onClick={handleClickListItemJobStatus}
                                       >
-                                          Change Status
-                                      </Button>
-                                  </ListItem>
-                              </List>
-                              <Menu
-                                  id="lock-menu"
-                                  anchorEl={anchorElJob}
-                                  open={openJob}
-                                  onClose={handleCloseMenuJob}
-                                  MenuListProps={{
-                                      'aria-labelledby': 'lock-button',
-                                      role: 'listbox',
-                                  }}
-                              >
-                                  {jobStatusOptions.map((option, index) => (
-                                      <MenuItem
-                                          key={option}
-                                          selected={index === selectedIndexJob}
-                                          onClick={(event) => handleMenuItemClickJob(event, index)}
-                                      >
-                                          {option}
-                                      </MenuItem>
-                                  ))}
-                              </Menu>
-                          </div>
-
-                          <div>
-                              <List
-                                  component="nav"
-                                  aria-label="Filters settings"
-                                  sx={{ bgcolor: 'var(--purple)' }}
-                              >
-                                  <ListItem
-                                      button
-                                      id="lock-button"
-                                      aria-haspopup="listbox"
-                                      aria-controls="lock-menu"
-                                      aria-expanded={open ? 'true' : undefined}
-                                      onClick={handleClickListItem}
+                                          <Button
+                                              id="demo-customized-button"
+                                              aria-controls={openJob ? 'demo-customized-menu' : undefined}
+                                              aria-haspopup="true"
+                                              aria-expanded={openJob ? 'true' : undefined}
+                                              variant="contained"
+                                              disableElevation
+                                              // onClick={handleClick}
+                                              endIcon={<KeyboardArrowDownIcon />}
+                                          >
+                                              Change Status
+                                          </Button>
+                                      </ListItem>
+                                  </List>
+                                  <Menu
+                                      id="lock-menu"
+                                      anchorEl={anchorElJob}
+                                      open={openJob}
+                                      onClose={handleCloseMenuJob}
+                                      MenuListProps={{
+                                          'aria-labelledby': 'lock-button',
+                                          role: 'listbox',
+                                      }}
                                   >
-                                      <Button
-                                          id="demo-customized-button"
-                                          aria-controls={open ? 'demo-customized-menu' : undefined}
-                                          aria-haspopup="true"
+                                      {jobStatusOptions.map((option, index) => (
+                                          <MenuItem
+                                              key={option}
+                                              selected={index === selectedIndexJob}
+                                              onClick={(event) => handleMenuItemClickJob(event, index)}
+                                          >
+                                              {option}
+                                          </MenuItem>
+                                      ))}
+                                  </Menu>
+                              </div>
+
+                              <div>
+                                  <List
+                                      component="nav"
+                                      aria-label="Filters settings"
+                                      sx={{ bgcolor: 'var(--purple)' }}
+                                  >
+                                      <ListItem
+                                          button
+                                          id="lock-button"
+                                          aria-haspopup="listbox"
+                                          aria-controls="lock-menu"
                                           aria-expanded={open ? 'true' : undefined}
-                                          variant="contained"
-                                          disableElevation
-                                          // onClick={handleClick}
-                                          endIcon={<KeyboardArrowDownIcon />}
+                                          onClick={handleClickListItem}
                                       >
-                                          Filters
-                                      </Button>
-                                  </ListItem>
-                              </List>
-                              <Menu
-                                  id="lock-menu"
-                                  anchorEl={anchorEl}
-                                  open={open}
-                                  onClose={handleCloseMenu}
-                                  MenuListProps={{
-                                      'aria-labelledby': 'lock-button',
-                                      role: 'listbox',
-                                  }}
-                              >
-                                  {options.map((option, index) => (
-                                      <MenuItem
-                                          key={option}
-                                          selected={index === selectedIndex}
-                                          onClick={(event) => handleMenuItemClick(event, index)}
-                                      >
-                                          {option}
-                                      </MenuItem>
-                                  ))}
-                              </Menu>
+                                          <Button
+                                              id="demo-customized-button"
+                                              aria-controls={open ? 'demo-customized-menu' : undefined}
+                                              aria-haspopup="true"
+                                              aria-expanded={open ? 'true' : undefined}
+                                              variant="contained"
+                                              disableElevation
+                                              // onClick={handleClick}
+                                              endIcon={<KeyboardArrowDownIcon />}
+                                          >
+                                              Filters
+                                          </Button>
+                                      </ListItem>
+                                  </List>
+                                  <Menu
+                                      id="lock-menu"
+                                      anchorEl={anchorEl}
+                                      open={open}
+                                      onClose={handleCloseMenu}
+                                      MenuListProps={{
+                                          'aria-labelledby': 'lock-button',
+                                          role: 'listbox',
+                                      }}
+                                  >
+                                      {options.map((option, index) => (
+                                          <MenuItem
+                                              key={option}
+                                              selected={index === selectedIndex}
+                                              onClick={(event) => handleMenuItemClick(event, index)}
+                                          >
+                                              {option}
+                                          </MenuItem>
+                                      ))}
+                                  </Menu>
+                              </div>
                           </div>
                       </div>
-                  </>
-              }
-          />
-          <CardContent>
-              <div style={{ display: 'flex', height: '100%' }}>
-                  <div style={{ flexGrow: 1 }}>
-                      <Box sx={{ height: '75vh', width: '100%' }}>
-                          <DataGrid
-                              getRowId={(row: any) => row.job_id}
-                              rows={jobsListing}
-                              rowCount={jobsLength}
-                              rowsPerPageOptions={[15]}
-                              pagination
-                              page={page}
-                              pageSize={15}
-                              paginationMode="server"
-                              checkboxSelection={true}
-                              onSelectionModelChange={(newSelectionModel) => {
-                                  setSelectionModel(newSelectionModel);
-                              }}
-                              selectionModel={selectionModel}
-                              onPageChange={(newPage) => handleChange(newPage)}
-                              columns={columns}
-                          />
-                      </Box>
                   </div>
               </div>
+              <div className="card-body">
+                  <div style={{ display: 'flex', height: '100%' }}>
+                      <div style={{ flexGrow: 1 }}>
+                          <Box sx={{ height: '75vh', width: '100%' }}>
+                              <DataGrid
+                                  getRowId={(row: any) => row.job_id}
+                                  rows={jobsListing}
+                                  rowCount={jobsLength}
+                                  rowsPerPageOptions={[15]}
+                                  pagination
+                                  page={page}
+                                  pageSize={15}
+                                  paginationMode="server"
+                                  checkboxSelection={true}
+                                  onSelectionModelChange={(newSelectionModel) => {
+                                      setSelectionModel(newSelectionModel);
+                                  }}
+                                  disableSelectionOnClick={true}
+                                  selectionModel={selectionModel}
+                                  onPageChange={(newPage) => handleChange(newPage)}
+                                  columns={columns}
+                              />
+                          </Box>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        {/*<Card sx={{ minWidth: 275 }}>*/}
+        {/*  <CardHeader*/}
+        {/*      className="custom-card-header"*/}
+        {/*      title="Jobs Listed"*/}
+        {/*      action={*/}
+        {/*          <>*/}
+        {/*              <div className="filter-btn-container">*/}
+        {/*                  <div>*/}
+        {/*                      <List*/}
+        {/*                          component="nav"*/}
+        {/*                          aria-label="Filters settings"*/}
+        {/*                          sx={{ bgcolor: 'var(--purple)' }}*/}
+        {/*                      >*/}
+        {/*                          <ListItem*/}
+        {/*                              button*/}
+        {/*                              id="lock-button"*/}
+        {/*                              aria-haspopup="listbox"*/}
+        {/*                              aria-controls="lock-menu"*/}
+        {/*                              aria-expanded={openJob ? 'true' : undefined}*/}
+        {/*                              onClick={handleClickListItemJobStatus}*/}
+        {/*                          >*/}
+        {/*                              <Button*/}
+        {/*                                  id="demo-customized-button"*/}
+        {/*                                  aria-controls={openJob ? 'demo-customized-menu' : undefined}*/}
+        {/*                                  aria-haspopup="true"*/}
+        {/*                                  aria-expanded={openJob ? 'true' : undefined}*/}
+        {/*                                  variant="contained"*/}
+        {/*                                  disableElevation*/}
+        {/*                                  // onClick={handleClick}*/}
+        {/*                                  endIcon={<KeyboardArrowDownIcon />}*/}
+        {/*                              >*/}
+        {/*                                  Change Status*/}
+        {/*                              </Button>*/}
+        {/*                          </ListItem>*/}
+        {/*                      </List>*/}
+        {/*                      <Menu*/}
+        {/*                          id="lock-menu"*/}
+        {/*                          anchorEl={anchorElJob}*/}
+        {/*                          open={openJob}*/}
+        {/*                          onClose={handleCloseMenuJob}*/}
+        {/*                          MenuListProps={{*/}
+        {/*                              'aria-labelledby': 'lock-button',*/}
+        {/*                              role: 'listbox',*/}
+        {/*                          }}*/}
+        {/*                      >*/}
+        {/*                          {jobStatusOptions.map((option, index) => (*/}
+        {/*                              <MenuItem*/}
+        {/*                                  key={option}*/}
+        {/*                                  selected={index === selectedIndexJob}*/}
+        {/*                                  onClick={(event) => handleMenuItemClickJob(event, index)}*/}
+        {/*                              >*/}
+        {/*                                  {option}*/}
+        {/*                              </MenuItem>*/}
+        {/*                          ))}*/}
+        {/*                      </Menu>*/}
+        {/*                  </div>*/}
 
-              {/*{jobsListing.length > 0 ? (*/}
-              {/*    jobsListing.map((job) => (*/}
-              {/*        <div className="card" style={{"border-radius": "10px", "margin-bottom": "5px",}}>*/}
-              {/*            <div className="card-body p-1">*/}
-              {/*                <div className="row px-3 justify-content-between">*/}
-              {/*                    <div className="col-6">*/}
-              {/*                        <h5 style={{"margin-bottom": '0px !important', color: "var(--purple)"}}>{ job['job_title'] ? job['job_title'] : '' }</h5>*/}
-              {/*                    </div>*/}
-              {/*                    <div className="col-2">*/}
-              {/*                        <p style={{"font-size": '16px', "font-weight": "bold"}}>{ job['job_admin_status'] ? job['job_admin_status'] : '' }</p>*/}
-              {/*                    </div>*/}
-              {/*                    <div className="col-2">*/}
-              {/*                        <p style={{"font-size": '16px', "font-weight": "bold"}}>Applicants: <span style={{color: "var(--purple)"}}>{ job['total_applicants'] ? job['total_applicants'] : '' }</span></p>*/}
-              {/*                    </div>*/}
-              {/*                    <div className="col-2" style={{display: 'flex', "justify-content": "flex-end"}}>*/}
-              {/*                        <button*/}
-              {/*                            className="btn btn-primary btn-sm"*/}
-              {/*                            style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}*/}
-              {/*                            onClick={() => {showVideoPopUP(job['recruiter'] ? job['recruiter']['name'] : 'Recruiter Information', job['recruiter'])}}*/}
-              {/*                        >View Recruiter</button>*/}
-              {/*                    </div>*/}
-              {/*                </div>*/}
-              {/*            </div>*/}
-              {/*        </div>*/}
-              {/*    ))*/}
-              {/*) : (*/}
-              {/*    <>*/}
-              {/*    </>*/}
-              {/*)}*/}
-          </CardContent>
-        </Card>
+        {/*                  <div>*/}
+        {/*                      <List*/}
+        {/*                          component="nav"*/}
+        {/*                          aria-label="Filters settings"*/}
+        {/*                          sx={{ bgcolor: 'var(--purple)' }}*/}
+        {/*                      >*/}
+        {/*                          <ListItem*/}
+        {/*                              button*/}
+        {/*                              id="lock-button"*/}
+        {/*                              aria-haspopup="listbox"*/}
+        {/*                              aria-controls="lock-menu"*/}
+        {/*                              aria-expanded={open ? 'true' : undefined}*/}
+        {/*                              onClick={handleClickListItem}*/}
+        {/*                          >*/}
+        {/*                              <Button*/}
+        {/*                                  id="demo-customized-button"*/}
+        {/*                                  aria-controls={open ? 'demo-customized-menu' : undefined}*/}
+        {/*                                  aria-haspopup="true"*/}
+        {/*                                  aria-expanded={open ? 'true' : undefined}*/}
+        {/*                                  variant="contained"*/}
+        {/*                                  disableElevation*/}
+        {/*                                  // onClick={handleClick}*/}
+        {/*                                  endIcon={<KeyboardArrowDownIcon />}*/}
+        {/*                              >*/}
+        {/*                                  Filters*/}
+        {/*                              </Button>*/}
+        {/*                          </ListItem>*/}
+        {/*                      </List>*/}
+        {/*                      <Menu*/}
+        {/*                          id="lock-menu"*/}
+        {/*                          anchorEl={anchorEl}*/}
+        {/*                          open={open}*/}
+        {/*                          onClose={handleCloseMenu}*/}
+        {/*                          MenuListProps={{*/}
+        {/*                              'aria-labelledby': 'lock-button',*/}
+        {/*                              role: 'listbox',*/}
+        {/*                          }}*/}
+        {/*                      >*/}
+        {/*                          {options.map((option, index) => (*/}
+        {/*                              <MenuItem*/}
+        {/*                                  key={option}*/}
+        {/*                                  selected={index === selectedIndex}*/}
+        {/*                                  onClick={(event) => handleMenuItemClick(event, index)}*/}
+        {/*                              >*/}
+        {/*                                  {option}*/}
+        {/*                              </MenuItem>*/}
+        {/*                          ))}*/}
+        {/*                      </Menu>*/}
+        {/*                  </div>*/}
+        {/*              </div>*/}
+        {/*          </>*/}
+        {/*      }*/}
+        {/*  />*/}
+        {/*  <CardContent>*/}
+        {/*      <div style={{ display: 'flex', height: '100%' }}>*/}
+        {/*          <div style={{ flexGrow: 1 }}>*/}
+        {/*              <Box sx={{ height: '75vh', width: '100%' }}>*/}
+        {/*                  <DataGrid*/}
+        {/*                      getRowId={(row: any) => row.job_id}*/}
+        {/*                      rows={jobsListing}*/}
+        {/*                      rowCount={jobsLength}*/}
+        {/*                      rowsPerPageOptions={[15]}*/}
+        {/*                      pagination*/}
+        {/*                      page={page}*/}
+        {/*                      pageSize={15}*/}
+        {/*                      paginationMode="server"*/}
+        {/*                      checkboxSelection={true}*/}
+        {/*                      onSelectionModelChange={(newSelectionModel) => {*/}
+        {/*                          setSelectionModel(newSelectionModel);*/}
+        {/*                      }}*/}
+        {/*                      selectionModel={selectionModel}*/}
+        {/*                      onPageChange={(newPage) => handleChange(newPage)}*/}
+        {/*                      columns={columns}*/}
+        {/*                  />*/}
+        {/*              </Box>*/}
+        {/*          </div>*/}
+        {/*      </div>*/}
+
+        {/*      /!*{jobsListing.length > 0 ? (*!/*/}
+        {/*      /!*    jobsListing.map((job) => (*!/*/}
+        {/*      /!*        <div className="card" style={{"border-radius": "10px", "margin-bottom": "5px",}}>*!/*/}
+        {/*      /!*            <div className="card-body p-1">*!/*/}
+        {/*      /!*                <div className="row px-3 justify-content-between">*!/*/}
+        {/*      /!*                    <div className="col-6">*!/*/}
+        {/*      /!*                        <h5 style={{"margin-bottom": '0px !important', color: "var(--purple)"}}>{ job['job_title'] ? job['job_title'] : '' }</h5>*!/*/}
+        {/*      /!*                    </div>*!/*/}
+        {/*      /!*                    <div className="col-2">*!/*/}
+        {/*      /!*                        <p style={{"font-size": '16px', "font-weight": "bold"}}>{ job['job_admin_status'] ? job['job_admin_status'] : '' }</p>*!/*/}
+        {/*      /!*                    </div>*!/*/}
+        {/*      /!*                    <div className="col-2">*!/*/}
+        {/*      /!*                        <p style={{"font-size": '16px', "font-weight": "bold"}}>Applicants: <span style={{color: "var(--purple)"}}>{ job['total_applicants'] ? job['total_applicants'] : '' }</span></p>*!/*/}
+        {/*      /!*                    </div>*!/*/}
+        {/*      /!*                    <div className="col-2" style={{display: 'flex', "justify-content": "flex-end"}}>*!/*/}
+        {/*      /!*                        <button*!/*/}
+        {/*      /!*                            className="btn btn-primary btn-sm"*!/*/}
+        {/*      /!*                            style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}*!/*/}
+        {/*      /!*                            onClick={() => {showVideoPopUP(job['recruiter'] ? job['recruiter']['name'] : 'Recruiter Information', job['recruiter'])}}*!/*/}
+        {/*      /!*                        >View Recruiter</button>*!/*/}
+        {/*      /!*                    </div>*!/*/}
+        {/*      /!*                </div>*!/*/}
+        {/*      /!*            </div>*!/*/}
+        {/*      /!*        </div>*!/*/}
+        {/*      /!*    ))*!/*/}
+        {/*      /!*) : (*!/*/}
+        {/*      /!*    <>*!/*/}
+        {/*      /!*    </>*!/*/}
+        {/*      /!*)}*!/*/}
+        {/*  </CardContent>*/}
+        {/*</Card>*/}
       </div>
 
         <Popup
