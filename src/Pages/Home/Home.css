@@ -129,3 +129,7 @@
   border: 1px solid var(--purple);
   border-radius: 10px;
 }
+.main-styled-form-class .dx-field-value .dx-checkbox-container {
+  border: 1px solid var(--purple);
+  border-radius: 10px;
+}

@@ -134,6 +134,7 @@ function Home(props) {
 
     // Recruiter PopUp
     const showVideoPopUP = (data) => {
+        console.log(data['row'].recruiter);
         setVideoPopUpTitle(data['row'].job_title);
         setVideoPopUpData(data['row'].recruiter);
         setVideoPopUp(true);
@@ -432,135 +433,264 @@ function Home(props) {
                 my="center"
                 of="center"
             />
-            <div style={{height: "100%", display: "flex", "flex-direction": "column", "justify-content": "center"}}>
-                <div className="row mb-2" style={{height: "60%"}}>
-                    <div className="col-3" style={{display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>
-                        <div className="card recruiter-profile-card-customization" style={{height: "100%", "border-radius": "20px", "background-color": "var(--purple)"}}>
-                            <div className="card-body">
-                                <div style={{height: "100%", display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>
-                                    <i className="fas fa-user" style={{color: "var(--light-purple)", "font-size": "8vw", "text-align": "center"}}></i>
-                                    <h5 className="m-0" style={{color: "var(--light-purple)", "text-align": "center"}}>{videoPopUpData['name']}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-3" style={{display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>
-                        <div className="card recruiter-card-customization" style={{height: "100px", "border-radius": "20px", "background-color": "var(--purple)"}}>
-                            <div className="card-body p-0 px-2">
-                                <div style={{height: "100%", display: 'flex', "justify-content": 'space-between'}}>
-                                    <h3 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}><b>Premium</b></h3>
-                                    {videoPopUpData['premium'] === 1 ? <i className="fas fa-check-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i> :
-                                        <i className="fas fa-close-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i>}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card recruiter-card-customization" style={{height: "60px", "border-radius": "20px", "background-color": "var(--purple)"}}>
-                            <div className="card-body p-0 px-2">
-                                <div style={{height: "100%", display: 'flex', "justify-content": 'space-between'}}>
-                                    <h3 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}><b>Eco Compliance</b></h3>
-                                    {videoPopUpData['eco_complaince'] === 1 ? <i className="fas fa-check-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i> :
-                                        <i className="fas fa-close-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i>}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card recruiter-card-customization" style={{height: "60px", "border-radius": "20px", "background-color": "var(--purple)"}}>
-                            <div className="card-body p-0 px-2">
-                                <div style={{height: "100%", display: 'flex', "justify-content": 'space-between'}}>
-                                    <h3 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}><b>Verified</b></h3>
-                                    {videoPopUpData['verified'] === 1 ? <i className="fas fa-check-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i> :
-                                        <i className="fas fa-close-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i>}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-6" style={{display: "flex", "flex-direction": "column", "justify-content": "space-between"}}>
-                        <div className="card recruiter-card-customization" style={{height: "100px", width: "100%", "border-radius": "20px", "background-color": "var(--purple)"}}>
-                            <div className="card-body">
-                                <div className="row">
-                                    <div className="col-4" style={{display: "flex", "flex-direction": "column", "justify-content": "center"}}>
-                                        <i className="fas fa-calendar" style={{color: "var(--light-purple)", "font-size": "60px"}}></i>
-                                    </div>
-                                    <div className="col-8">
-                                        <h3 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "end"}}><b>Recruiter Created At</b></h3>
-                                        <h4 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "end"}}><b>{moment(videoPopUpData['created_at']).format('yyyy-MM-DD HH:mm:ss A')}</b></h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            {/*<div style={{height: "100%", display: "flex", "flex-direction": "column", "justify-content": "center"}}>*/}
+            {/*    <div className="row mb-2" style={{height: "60%"}}>*/}
+            {/*        <div className="col-3" style={{display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>*/}
+            {/*            <div className="card recruiter-profile-card-customization" style={{height: "100%", "border-radius": "20px", "background-color": "var(--purple)"}}>*/}
+            {/*                <div className="card-body">*/}
+            {/*                    <div style={{height: "100%", display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>*/}
+            {/*                        <i className="fas fa-user" style={{color: "var(--light-purple)", "font-size": "8vw", "text-align": "center"}}></i>*/}
+            {/*                        <h5 className="m-0" style={{color: "var(--light-purple)", "text-align": "center"}}>{videoPopUpData['name']}</h5>*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*        <div className="col-3" style={{display: 'flex', "flex-direction": "column", "justify-content": 'space-between'}}>*/}
+            {/*            <div className="card recruiter-card-customization" style={{height: "100px", "border-radius": "20px", "background-color": "var(--purple)"}}>*/}
+            {/*                <div className="card-body p-0 px-2">*/}
+            {/*                    <div style={{height: "100%", display: 'flex', "justify-content": 'space-between'}}>*/}
+            {/*                        <h3 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}><b>Premium</b></h3>*/}
+            {/*                        {videoPopUpData['premium'] === 1 ? <i className="fas fa-check-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i> :*/}
+            {/*                            <i className="fas fa-close-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i>}*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*            <div className="card recruiter-card-customization" style={{height: "60px", "border-radius": "20px", "background-color": "var(--purple)"}}>*/}
+            {/*                <div className="card-body p-0 px-2">*/}
+            {/*                    <div style={{height: "100%", display: 'flex', "justify-content": 'space-between'}}>*/}
+            {/*                        <h3 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}><b>Eco Compliance</b></h3>*/}
+            {/*                        {videoPopUpData['eco_complaince'] === 1 ? <i className="fas fa-check-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i> :*/}
+            {/*                            <i className="fas fa-close-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i>}*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*            <div className="card recruiter-card-customization" style={{height: "60px", "border-radius": "20px", "background-color": "var(--purple)"}}>*/}
+            {/*                <div className="card-body p-0 px-2">*/}
+            {/*                    <div style={{height: "100%", display: 'flex', "justify-content": 'space-between'}}>*/}
+            {/*                        <h3 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}><b>Verified</b></h3>*/}
+            {/*                        {videoPopUpData['verified'] === 1 ? <i className="fas fa-check-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i> :*/}
+            {/*                            <i className="fas fa-close-circle" style={{color: "var(--light-purple)", "font-size": "1.5vw", "text-align": "center", display: "flex", "flex-direction": "column", "justify-content": "center"}}></i>}*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*        <div className="col-6" style={{display: "flex", "flex-direction": "column", "justify-content": "space-between"}}>*/}
+            {/*            <div className="card recruiter-card-customization" style={{height: "100px", width: "100%", "border-radius": "20px", "background-color": "var(--purple)"}}>*/}
+            {/*                <div className="card-body">*/}
+            {/*                    <div className="row">*/}
+            {/*                        <div className="col-4" style={{display: "flex", "flex-direction": "column", "justify-content": "center"}}>*/}
+            {/*                            <i className="fas fa-calendar" style={{color: "var(--light-purple)", "font-size": "60px"}}></i>*/}
+            {/*                        </div>*/}
+            {/*                        <div className="col-8">*/}
+            {/*                            <h3 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "end"}}><b>Recruiter Created At</b></h3>*/}
+            {/*                            <h4 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "end"}}><b>{moment(videoPopUpData['created_at']).format('yyyy-MM-DD HH:mm:ss A')}</b></h4>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
 
-                        <div className="card recruiter-card-customization" style={{height: "130px", width: "100%", "border-radius": "20px", "background-color": "var(--purple)"}}>
-                            <div className="card-body" style={{display: "flex", "flex-direction": "column", "justify-content": "space-between"}}>
-                                <h4 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "center"}}><b>Job Counts</b></h4>
-                                <div className="row">
-                                    <div className="col-6">
-                                        <h5 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "start"}}><b>Total Posted Jobs</b></h5>
-                                    </div>
-                                    <div className="col-6">
-                                        <h5 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['total_posted_job_count']}</b></h5>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-6">
-                                        <h5 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "start"}}><b>Remaining Jobs</b></h5>
-                                    </div>
-                                    <div className="col-6">
-                                        <h5 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['remain_job_count']}</b></h5>
-                                    </div>
-                                </div>
+            {/*            <div className="card recruiter-card-customization" style={{height: "130px", width: "100%", "border-radius": "20px", "background-color": "var(--purple)"}}>*/}
+            {/*                <div className="card-body" style={{display: "flex", "flex-direction": "column", "justify-content": "space-between"}}>*/}
+            {/*                    <h4 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "center"}}><b>Job Counts</b></h4>*/}
+            {/*                    <div className="row">*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "start"}}><b>Total Posted Jobs</b></h5>*/}
+            {/*                        </div>*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['total_posted_job_count']}</b></h5>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                    <div className="row">*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "start"}}><b>Remaining Jobs</b></h5>*/}
+            {/*                        </div>*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "var(--light-purple)", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['remain_job_count']}</b></h5>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+
+            {/*    <div className="row" style={{height: "39%", }}>*/}
+            {/*        <div className="col-6" style={{display: "flex", "flex-direction": "column", "justify-content": "center"}}>*/}
+            {/*            <div className="card recruiter-card-customization" style={{"border-radius": "20px", border: "2px solid var(--purple)"}}>*/}
+            {/*                <div className="card-body">*/}
+            {/*                    <h4 style={{color: "var(--purple)", margin: "0px !important", "text-align": "center"}}><b>Recruiter Information</b></h4>*/}
+            {/*                    <div className="row">*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "var(--purple)", margin: "0px !important", "text-align": "start"}}><b><u>Email</u></b></h5>*/}
+            {/*                        </div>*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "grey", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['email']}</b></h5>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                    <div className="row">*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "var(--purple)", margin: "0px !important", "text-align": "start"}}><b><u>Phone No.</u></b></h5>*/}
+            {/*                        </div>*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "grey", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['num']}</b></h5>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*        <div className="col-6" style={{display: "flex", "flex-direction": "column", "justify-content": "center"}}>*/}
+            {/*            <div className="card recruiter-card-customization" style={{"border-radius": "20px", border: "2px solid var(--purple)"}}>*/}
+            {/*                <div className="card-body">*/}
+            {/*                    <h4 style={{color: "var(--purple)", margin: "0px !important", "text-align": "center"}}><b>Company Information</b></h4>*/}
+            {/*                    <div className="row">*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "var(--purple)", margin: "0px !important", "text-align": "start"}}><b><u>Name</u></b></h5>*/}
+            {/*                        </div>*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "grey", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['company'] ? videoPopUpData['company']['name'] : ''}</b></h5>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                    <div className="row">*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "var(--purple)", margin: "0px !important", "text-align": "start"}}><b><u>Industry</u></b></h5>*/}
+            {/*                        </div>*/}
+            {/*                        <div className="col-6">*/}
+            {/*                            <h5 style={{color: "grey", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['company'] ? videoPopUpData['company']['industry']['name'] : ''}</b></h5>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+
+            <ScrollView width='100%' height='100%'>
+                <div className="row main-styled-form-class">
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Name</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['name']} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Email</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['email']} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Phone</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['num']} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-4 main-styled-form-class">
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Remaining Job Count</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['remain_job_count']} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Total Posted Jobs</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['total_posted_job_count']} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Phone</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['num']} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-4 main-styled-form-class">
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Membership Expiry</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['membership_expiry_date'] ? moment(videoPopUpData['membership_expiry_date']).format('yyyy-MM-DD') : ''} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Created</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['created_at'] ? moment(videoPopUpData['created_at']).format('yyyy-MM-DD') : ''} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Updated</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['updated_at'] ? moment(videoPopUpData['updated_at']).format('yyyy-MM-DD') : ''} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-4 main-styled-form-class">
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Verified</div>
+                            <div className="dx-field-value">
+                                <CheckBox disabled={true} defaultValue={jobDetailPopUpData['verified'] === 1 ? true : false} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Premium</div>
+                            <div className="dx-field-value">
+                                <CheckBox disabled={true} defaultValue={jobDetailPopUpData['premium'] === 1 ? true : false} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Eco Compliance</div>
+                            <div className="dx-field-value">
+                                <CheckBox disabled={true} defaultValue={jobDetailPopUpData['eco_compliance'] === 1 ? true : false} />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="row" style={{height: "39%", }}>
-                    <div className="col-6" style={{display: "flex", "flex-direction": "column", "justify-content": "center"}}>
-                        <div className="card recruiter-card-customization" style={{"border-radius": "20px", border: "2px solid var(--purple)"}}>
-                            <div className="card-body">
-                                <h4 style={{color: "var(--purple)", margin: "0px !important", "text-align": "center"}}><b>Recruiter Information</b></h4>
-                                <div className="row">
-                                    <div className="col-6">
-                                        <h5 style={{color: "var(--purple)", margin: "0px !important", "text-align": "start"}}><b><u>Email</u></b></h5>
-                                    </div>
-                                    <div className="col-6">
-                                        <h5 style={{color: "grey", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['email']}</b></h5>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-6">
-                                        <h5 style={{color: "var(--purple)", margin: "0px !important", "text-align": "start"}}><b><u>Phone No.</u></b></h5>
-                                    </div>
-                                    <div className="col-6">
-                                        <h5 style={{color: "grey", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['num']}</b></h5>
-                                    </div>
-                                </div>
+                <h3 className="mt-4" style={{color: "#FCA120", "font-weight": "700"}}>
+                    Company
+                </h3>
+                <div className="row mt-4 main-styled-form-class">
+                    <div className="col-lg-6">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Name</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['company'] ? (videoPopUpData['company']['name'] ? videoPopUpData['company']['name'] : '') : ''} />
                             </div>
                         </div>
                     </div>
-                    <div className="col-6" style={{display: "flex", "flex-direction": "column", "justify-content": "center"}}>
-                        <div className="card recruiter-card-customization" style={{"border-radius": "20px", border: "2px solid var(--purple)"}}>
-                            <div className="card-body">
-                                <h4 style={{color: "var(--purple)", margin: "0px !important", "text-align": "center"}}><b>Company Information</b></h4>
-                                <div className="row">
-                                    <div className="col-6">
-                                        <h5 style={{color: "var(--purple)", margin: "0px !important", "text-align": "start"}}><b><u>Name</u></b></h5>
-                                    </div>
-                                    <div className="col-6">
-                                        <h5 style={{color: "grey", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['company'] ? videoPopUpData['company']['name'] : ''}</b></h5>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-6">
-                                        <h5 style={{color: "var(--purple)", margin: "0px !important", "text-align": "start"}}><b><u>Industry</u></b></h5>
-                                    </div>
-                                    <div className="col-6">
-                                        <h5 style={{color: "grey", margin: "0px !important", "text-align": "end"}}><b>{videoPopUpData['company'] ? videoPopUpData['company']['industry']['name'] : ''}</b></h5>
-                                    </div>
-                                </div>
+                    <div className="col-lg-6">
+                        <div className="dx-field">
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Industry</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={videoPopUpData['company'] ? (videoPopUpData['company']['industry'] ? videoPopUpData['company']['industry']['name'] : '') : ''} />
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </ScrollView>
         </Popup>
 
 
