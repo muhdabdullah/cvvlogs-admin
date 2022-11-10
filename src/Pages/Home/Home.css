@@ -120,3 +120,12 @@
 .filter-btn-container {
   display: flex;
 }
+
+.main-styled-form-class .dx-field-value .dx-textbox {
+  border-radius: 10px;
+}
+
+.main-styled-form-class .dx-field-value .dx-textbox .dx-texteditor-container {
+  border: 1px solid var(--purple);
+  border-radius: 10px;
+}

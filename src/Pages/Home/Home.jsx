@@ -582,10 +582,10 @@ function Home(props) {
                 of="center"
             />
             <ScrollView width='100%' height='100%'>
-                <div className="row">
+                <div className="row main-styled-form-class">
                     <div className="col-lg-6">
                         <div className="dx-field">
-                            <div className="dx-field-label">Job Description</div>
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Job Description</div>
                             <div className="dx-field-value">
                                 <TextBox disabled={true} value={jobDetailPopUpData['job_description']} />
                             </div>
@@ -593,17 +593,17 @@ function Home(props) {
                     </div>
                     <div className="col-lg-6">
                         <div className="dx-field">
-                            <div className="dx-field-label">Job Status</div>
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Job Status</div>
                             <div className="dx-field-value">
                                 <TextBox disabled={true} value={jobDetailPopUpData['job_admin_status']} />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="row mt-4">
+                <div className="row mt-4 main-styled-form-class">
                     <div className="col-lg-6">
                         <div className="dx-field">
-                            <div className="dx-field-label">Created At</div>
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Created At</div>
                             <div className="dx-field-value">
                                 <TextBox disabled={true} value={jobDetailPopUpData['ago']} />
                             </div>
@@ -611,19 +611,19 @@ function Home(props) {
                     </div>
                     <div className="col-lg-6">
                         <div className="dx-field">
-                            <div className="dx-field-label">Updated At</div>
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Updated At</div>
                             <div className="dx-field-value">
                                 <TextBox disabled={true} value={moment(jobDetailPopUpData['updated_at']).format('yyyy-MM-DD HH:mm:ss a')} />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="row mt-4">
+                <div className="row mt-4 main-styled-form-class">
                     <div className="col-lg-6">
                         <div className="row">
                             <div className="col-lg-6">
                                 <div className="dx-field">
-                                    <div className="dx-field-label">Currency</div>
+                                    <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Currency</div>
                                     <div className="dx-field-value">
                                         <TextBox disabled={true} value={jobDetailPopUpData['currency']} />
                                     </div>
@@ -631,7 +631,7 @@ function Home(props) {
                             </div>
                             <div className="col-lg-6">
                                 <div className="dx-field">
-                                    <div className="dx-field-label">Gender</div>
+                                    <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Gender</div>
                                     <div className="dx-field-value">
                                         <TextBox disabled={true} value={jobDetailPopUpData['gender']} />
                                     </div>
@@ -641,7 +641,7 @@ function Home(props) {
                     </div>
                     <div className="col-lg-6">
                         <div className="dx-field">
-                            <div className="dx-field-label">Experience Required</div>
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Experience Required</div>
                             <div className="dx-field-value">
                                 <TextBox disabled={true} value={jobDetailPopUpData['experience_req']} />
                             </div>
@@ -649,12 +649,12 @@ function Home(props) {
                     </div>
                 </div>
 
-                <div className="row mt-4">
+                <div className="row mt-4 main-styled-form-class">
                     <div className="col-lg-6">
                         <div className="row">
                             <div className="col-lg-6">
                                 <div className="dx-field">
-                                    <div className="dx-field-label">Applicants</div>
+                                    <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Applicants</div>
                                     <div className="dx-field-value">
                                         <TextBox disabled={true} value={jobDetailPopUpData['total_applicants']} />
                                     </div>
@@ -662,7 +662,7 @@ function Home(props) {
                             </div>
                             <div className="col-lg-6">
                                 <div className="dx-field">
-                                    <div className="dx-field-label">Vacancy</div>
+                                    <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Vacancy</div>
                                     <div className="dx-field-value">
                                         <TextBox disabled={true} value={jobDetailPopUpData['vacancy']} />
                                     </div>
@@ -672,7 +672,7 @@ function Home(props) {
                     </div>
                     <div className="col-lg-6">
                         <div className="dx-field">
-                            <div className="dx-field-label">Salary</div>
+                            <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Salary</div>
                             <div className="dx-field-value">
                                 <TextBox disabled={true} value={jobDetailPopUpData['salary_min'] + " - " + jobDetailPopUpData['salary_max']} />
                             </div>
@@ -680,12 +680,12 @@ function Home(props) {
                     </div>
                 </div>
 
-                <div className="row mt-4">
+                <div className="row mt-4 main-styled-form-class">
                     <div className="col-lg-6">
                         <div className="row">
                             <div className="col-lg-6">
                                 <div className="dx-field">
-                                    <div className="dx-field-label">Work Level</div>
+                                    <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Work Level</div>
                                     <div className="dx-field-value">
                                         <TextBox disabled={true} value={jobDetailPopUpData['work_level']} />
                                     </div>
@@ -693,9 +693,9 @@ function Home(props) {
                             </div>
                             <div className="col-lg-6">
                                 <div className="dx-field">
-                                    <div className="dx-field-label">Status</div>
+                                    <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Status</div>
                                     <div className="dx-field-value">
-                                        <CheckBox defaultValue={jobDetailPopUpData['status'] === 1 ? true : false} />
+                                        <CheckBox disabled={true} defaultValue={jobDetailPopUpData['status'] === 1 ? true : false} />
                                     </div>
                                 </div>
                             </div>
@@ -705,17 +705,17 @@ function Home(props) {
                         <div className="row">
                             <div className="col-lg-6">
                                 <div className="dx-field">
-                                    <div className="dx-field-label">Approved</div>
+                                    <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>Approved</div>
                                     <div className="dx-field-value">
-                                        <CheckBox defaultValue={jobDetailPopUpData['is_admin_approved'] === 1 ? true : false} />
+                                        <CheckBox disabled={true} defaultValue={jobDetailPopUpData['is_admin_approved'] === 1 ? true : false} />
                                     </div>
                                 </div>
                             </div>
                             <div className="col-lg-6">
                                 <div className="dx-field">
-                                    <div className="dx-field-label">International Hiring</div>
+                                    <div className="dx-field-label" style={{"font-weight": "700", color: "var(--purple)"}}>International Hiring</div>
                                     <div className="dx-field-value">
-                                        <CheckBox defaultValue={jobDetailPopUpData['international_hiring_status'] === 1 ? true : false} />
+                                        <CheckBox disabled={true} defaultValue={jobDetailPopUpData['international_hiring_status'] === 1 ? true : false} />
                                     </div>
                                 </div>
                             </div>
