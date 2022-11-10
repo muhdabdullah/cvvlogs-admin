@@ -23,7 +23,14 @@ import List from "@mui/material/List";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const options = [
+    'All',
     'Pending',
+    'Approved',
+    'Rejected'
+];
+
+const userStatusOptions = [
+    // 'Pending',
     'Approved',
     'Rejected'
 ];
@@ -42,13 +49,19 @@ function Users(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
+    // SELECTED ROWS
+    const [selectionModel, setSelectionModel] = React.useState([]);
+
+    // JOB STATUS CHANGE
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [selectedIndexUser, setSelectedIndexUser] = React.useState(0);
+
 
 
     useEffect(() => {
-        usersData(1, status);
+        usersData(page, status);
     }, []);
     useEffect(() => {
-        console.log(props.userReducer.users);
         setUsers(
             (prev) => (prev = props.userReducer.users.data)
         );
@@ -67,9 +80,32 @@ function Users(props) {
         return null;
     };
 
-    const updateStatus = async (user, jobStatusChange) => {
-        await props.updateVideoStatus(user['row'].id, jobStatusChange);
-        usersData(page, status);
+    const updateStatus = async (userIdsList, jobStatusChange) => {
+        // await props.updateVideoStatus(userIdsList, jobStatusChange);
+        // usersData(page, status);
+        fetch(`${process.env.REACT_APP_API_END_POINT}/update-video-status`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+            },
+            body: JSON.stringify({
+                id: userIdsList,
+                status: jobStatusChange,
+            }),
+        })
+            .then((res) => res.json())
+            .then((response) => {
+                if (response.success) {
+                    setLoading(false);
+                    usersData(page, status);
+                } else {
+                    alert(response.message);
+                }
+            })
+            .catch((error) => {
+                console.log("error", error);
+            });
         return null;
     };
 
@@ -97,18 +133,43 @@ function Users(props) {
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
         setAnchorEl(null);
-        // if (index === 0) {
-        //     setStatus((prev) => (prev = undefined));
-        //     usersData(1, 0);
-        // }
-        // if (index === 1) {
-        //     setStatus((prev) => (prev = undefined));
-        //     usersData(1, 1);
-        // }
-        // if (index === 2) {
-        //     setStatus((prev) => (prev = undefined));
-        //     usersData(1, 2);
-        // }
+        if (index === 0) {
+            setStatus((prev) => (prev = undefined));
+            usersData(1, undefined);
+        }
+        if (index === 1) {
+            setStatus((prev) => (prev = 1));
+            usersData(1, 1);
+        }
+        if (index === 2) {
+            setStatus((prev) => (prev = 2));
+            usersData(1, 2);
+        }
+        if (index === 3) {
+            setStatus((prev) => (prev = 3));
+            usersData(1, 3);
+        }
+    };
+
+    // JOB STATUS CHANGE
+    const openUser = Boolean(anchorElUser);
+    const handleClickListItemUserStatus = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleMenuItemClickUser = (event, index) => {
+        setSelectedIndexUser(index);
+        if (index === 0) {
+            updateStatus(selectionModel, 2);
+        }
+        if (index === 1) {
+            updateStatus(selectionModel, 3);
+        }
+        setAnchorElUser(null);
+    };
+
+    const handleCloseMenuUser = () => {
+        setAnchorElUser(null);
     };
 
     const handleChange = (value) => {
@@ -131,13 +192,13 @@ function Users(props) {
                             key={params.row.id}
                             className="btn btn-success btn-sm"
                             style={{color: "var(--light-purple)", border: 'none'}}
-                            onClick={() => {updateStatus(params, 2)}}
+                            onClick={() => {updateStatus([params['row'].id], 2)}}
                         >Accept</button>
                         <button
                             key={params.row.id}
                             className="btn btn-danger btn-sm"
                             style={{color: "var(--light-purple)", border: 'none'}}
-                            onClick={() => {updateStatus(params, 3)}}
+                            onClick={() => {updateStatus([params['row'].id], 3)}}
                         >Reject</button>
                         <button
                             key={params.row.id}
@@ -172,53 +233,106 @@ function Users(props) {
                             <h3 className="m-0" style={{color: "#FFFFFF", "align-self": "center"}}><b>Users</b></h3>
                             <div>
                                 <div className="filter-btn-container">
-                                    <List
-                                        component="nav"
-                                        aria-label="Filters settings"
-                                        sx={{ bgcolor: 'var(--purple)' }}
-                                    >
-                                        <ListItem
-                                            button
-                                            id="lock-button"
-                                            aria-haspopup="listbox"
-                                            aria-controls="lock-menu"
-                                            aria-expanded={open ? 'true' : undefined}
-                                            onClick={handleClickListItem}
+
+                                    {selectionModel && selectionModel.length >= 2 ? <div>
+                                        <List
+                                            component="nav"
+                                            aria-label="Filters settings"
+                                            sx={{ bgcolor: 'var(--purple)' }}
                                         >
-                                            <Button
-                                                id="demo-customized-button"
-                                                aria-controls={open ? 'demo-customized-menu' : undefined}
-                                                aria-haspopup="true"
+                                            <ListItem
+                                                button
+                                                id="lock-button"
+                                                aria-haspopup="listbox"
+                                                aria-controls="lock-menu"
+                                                aria-expanded={openUser ? 'true' : undefined}
+                                                onClick={handleClickListItemUserStatus}
+                                            >
+                                                <Button
+                                                    id="demo-customized-button"
+                                                    aria-controls={openUser ? 'demo-customized-menu' : undefined}
+                                                    aria-haspopup="true"
+                                                    aria-expanded={openUser ? 'true' : undefined}
+                                                    variant="contained"
+                                                    disableElevation
+                                                    // onClick={handleClick}
+                                                    endIcon={<KeyboardArrowDownIcon />}
+                                                >
+                                                    Change Status
+                                                </Button>
+                                            </ListItem>
+                                        </List>
+                                        <Menu
+                                            id="lock-menu"
+                                            anchorEl={anchorElUser}
+                                            open={openUser}
+                                            onClose={handleCloseMenuUser}
+                                            MenuListProps={{
+                                                'aria-labelledby': 'lock-button',
+                                                role: 'listbox',
+                                            }}
+                                        >
+                                            {userStatusOptions.map((option, index) => (
+                                                <MenuItem
+                                                    key={option}
+                                                    selected={index === selectedIndexUser}
+                                                    onClick={(event) => handleMenuItemClickUser(event, index)}
+                                                >
+                                                    {option}
+                                                </MenuItem>
+                                            ))}
+                                        </Menu>
+                                    </div>: <></>}
+
+                                    <div>
+                                        <List
+                                            component="nav"
+                                            aria-label="Filters settings"
+                                            sx={{ bgcolor: 'var(--purple)' }}
+                                        >
+                                            <ListItem
+                                                button
+                                                id="lock-button"
+                                                aria-haspopup="listbox"
+                                                aria-controls="lock-menu"
                                                 aria-expanded={open ? 'true' : undefined}
-                                                variant="contained"
-                                                disableElevation
-                                                // onClick={handleClick}
-                                                endIcon={<KeyboardArrowDownIcon />}
+                                                onClick={handleClickListItem}
                                             >
-                                                Filters
-                                            </Button>
-                                        </ListItem>
-                                    </List>
-                                    <Menu
-                                        id="lock-menu"
-                                        anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleCloseMenu}
-                                        MenuListProps={{
-                                            'aria-labelledby': 'lock-button',
-                                            role: 'listbox',
-                                        }}
-                                    >
-                                        {options.map((option, index) => (
-                                            <MenuItem
-                                                key={option}
-                                                selected={index === selectedIndex}
-                                                onClick={(event) => handleMenuItemClick(event, index)}
-                                            >
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </Menu>
+                                                <Button
+                                                    id="demo-customized-button"
+                                                    aria-controls={open ? 'demo-customized-menu' : undefined}
+                                                    aria-haspopup="true"
+                                                    aria-expanded={open ? 'true' : undefined}
+                                                    variant="contained"
+                                                    disableElevation
+                                                    // onClick={handleClick}
+                                                    endIcon={<KeyboardArrowDownIcon />}
+                                                >
+                                                    Filters
+                                                </Button>
+                                            </ListItem>
+                                        </List>
+                                        <Menu
+                                            id="lock-menu"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleCloseMenu}
+                                            MenuListProps={{
+                                                'aria-labelledby': 'lock-button',
+                                                role: 'listbox',
+                                            }}
+                                        >
+                                            {options.map((option, index) => (
+                                                <MenuItem
+                                                    key={option}
+                                                    selected={index === selectedIndex}
+                                                    onClick={(event) => handleMenuItemClick(event, index)}
+                                                >
+                                                    {option}
+                                                </MenuItem>
+                                            ))}
+                                        </Menu>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -235,8 +349,13 @@ function Users(props) {
                                         pagination
                                         page={page}
                                         pageSize={15}
-                                        paginationMode="server"
+                                        checkboxSelection={true}
+                                        onSelectionModelChange={(newSelectionModel) => {
+                                            setSelectionModel(newSelectionModel);
+                                        }}
                                         disableSelectionOnClick={true}
+                                        selectionModel={selectionModel}
+                                        paginationMode="server"
                                         onPageChange={(newPage) => handleChange(newPage)}
                                         columns={columns}
                                     />
@@ -285,8 +404,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getUsers: (page, admin_status) =>
         dispatch(getUsers(page, admin_status)),
-    updateVideoStatus: (id, status) =>
-        dispatch(updateUserVideoStatus(id, status)),
 
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

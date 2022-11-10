@@ -200,13 +200,13 @@ function Home(props) {
         // }
         if (index === 0) {
             updateJobStatus(selectionModel, 1);
-            setLoading(false);
-            dashboardData(page, status);
+            // setLoading(false);
+            // dashboardData(page, status);
         }
         if (index === 1) {
             updateJobStatus(selectionModel, 2);
-            setLoading(false);
-            dashboardData(page, status);
+            // setLoading(false);
+            // dashboardData(page, status);
         }
         setAnchorElJob(null);
     };
@@ -283,7 +283,7 @@ function Home(props) {
                       <h3 className="m-0" style={{color: "#FFFFFF", "align-self": "center"}}><b>Jobs Listed</b></h3>
                       <div>
                           <div className="filter-btn-container">
-                              <div>
+                              {selectionModel && selectionModel.length >= 2 ? <div>
                                   <List
                                       component="nav"
                                       aria-label="Filters settings"
@@ -331,7 +331,7 @@ function Home(props) {
                                           </MenuItem>
                                       ))}
                                   </Menu>
-                              </div>
+                              </div>: <></>}
 
                               <div>
                                   <List
