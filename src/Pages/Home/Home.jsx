@@ -31,6 +31,7 @@ import IconButton from "@mui/material/IconButton";
 import { DataGrid } from '@mui/x-data-grid';
 import Box from "@mui/material/Box";
 import {GridRenderCellParams} from "@mui/x-data-grid";
+import {CheckBox, ScrollView, TextBox} from "devextreme-react";
 
 const options = [
     'Pending Jobs',
@@ -64,6 +65,12 @@ function Home(props) {
 
     // SELECTED ROWS
     const [selectionModel, setSelectionModel] = React.useState([]);
+
+    // Job Details PopUp
+    const [jobDetailPopUp, setJobDetailPopUp] = useState(false);
+    const [jobDetailPopUpTitle, setJobDetailPopUpTitle] = useState('');
+    const [jobDetailPopUpData, setJobDetailPopUpData] = useState({});
+
 
   useEffect(() => {
       setPage(1);
@@ -125,6 +132,7 @@ function Home(props) {
     dashboardData(value, status);
   };
 
+    // Recruiter PopUp
     const showVideoPopUP = (data) => {
         setVideoPopUpTitle(data['row'].job_title);
         setVideoPopUpData(data['row'].recruiter);
@@ -134,6 +142,19 @@ function Home(props) {
         setVideoPopUpTitle('');
         setVideoPopUpData({});
         setVideoPopUp(false);
+    };
+
+    // Job Details PopUp
+    const showJobDetailPopUP = (data) => {
+        console.log(data['row']);
+        setJobDetailPopUpTitle(data['row'].job_title);
+        setJobDetailPopUpData(data['row']);
+        setJobDetailPopUp(true);
+    };
+    const hideJobDetailPopUP = () => {
+        setJobDetailPopUpTitle('');
+        setJobDetailPopUpData({});
+        setJobDetailPopUp(false);
     };
 
     // MENU
@@ -237,6 +258,7 @@ function Home(props) {
                         <button
                             className="btn btn-primary btn-sm"
                             style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}
+                            onClick={() => {showJobDetailPopUP(params)}}
                         >Job Details</button>
                         <button
                             className="btn btn-primary btn-sm"
@@ -391,172 +413,6 @@ function Home(props) {
                   </div>
               </div>
           </div>
-        {/*<Card sx={{ minWidth: 275 }}>*/}
-        {/*  <CardHeader*/}
-        {/*      className="custom-card-header"*/}
-        {/*      title="Jobs Listed"*/}
-        {/*      action={*/}
-        {/*          <>*/}
-        {/*              <div className="filter-btn-container">*/}
-        {/*                  <div>*/}
-        {/*                      <List*/}
-        {/*                          component="nav"*/}
-        {/*                          aria-label="Filters settings"*/}
-        {/*                          sx={{ bgcolor: 'var(--purple)' }}*/}
-        {/*                      >*/}
-        {/*                          <ListItem*/}
-        {/*                              button*/}
-        {/*                              id="lock-button"*/}
-        {/*                              aria-haspopup="listbox"*/}
-        {/*                              aria-controls="lock-menu"*/}
-        {/*                              aria-expanded={openJob ? 'true' : undefined}*/}
-        {/*                              onClick={handleClickListItemJobStatus}*/}
-        {/*                          >*/}
-        {/*                              <Button*/}
-        {/*                                  id="demo-customized-button"*/}
-        {/*                                  aria-controls={openJob ? 'demo-customized-menu' : undefined}*/}
-        {/*                                  aria-haspopup="true"*/}
-        {/*                                  aria-expanded={openJob ? 'true' : undefined}*/}
-        {/*                                  variant="contained"*/}
-        {/*                                  disableElevation*/}
-        {/*                                  // onClick={handleClick}*/}
-        {/*                                  endIcon={<KeyboardArrowDownIcon />}*/}
-        {/*                              >*/}
-        {/*                                  Change Status*/}
-        {/*                              </Button>*/}
-        {/*                          </ListItem>*/}
-        {/*                      </List>*/}
-        {/*                      <Menu*/}
-        {/*                          id="lock-menu"*/}
-        {/*                          anchorEl={anchorElJob}*/}
-        {/*                          open={openJob}*/}
-        {/*                          onClose={handleCloseMenuJob}*/}
-        {/*                          MenuListProps={{*/}
-        {/*                              'aria-labelledby': 'lock-button',*/}
-        {/*                              role: 'listbox',*/}
-        {/*                          }}*/}
-        {/*                      >*/}
-        {/*                          {jobStatusOptions.map((option, index) => (*/}
-        {/*                              <MenuItem*/}
-        {/*                                  key={option}*/}
-        {/*                                  selected={index === selectedIndexJob}*/}
-        {/*                                  onClick={(event) => handleMenuItemClickJob(event, index)}*/}
-        {/*                              >*/}
-        {/*                                  {option}*/}
-        {/*                              </MenuItem>*/}
-        {/*                          ))}*/}
-        {/*                      </Menu>*/}
-        {/*                  </div>*/}
-
-        {/*                  <div>*/}
-        {/*                      <List*/}
-        {/*                          component="nav"*/}
-        {/*                          aria-label="Filters settings"*/}
-        {/*                          sx={{ bgcolor: 'var(--purple)' }}*/}
-        {/*                      >*/}
-        {/*                          <ListItem*/}
-        {/*                              button*/}
-        {/*                              id="lock-button"*/}
-        {/*                              aria-haspopup="listbox"*/}
-        {/*                              aria-controls="lock-menu"*/}
-        {/*                              aria-expanded={open ? 'true' : undefined}*/}
-        {/*                              onClick={handleClickListItem}*/}
-        {/*                          >*/}
-        {/*                              <Button*/}
-        {/*                                  id="demo-customized-button"*/}
-        {/*                                  aria-controls={open ? 'demo-customized-menu' : undefined}*/}
-        {/*                                  aria-haspopup="true"*/}
-        {/*                                  aria-expanded={open ? 'true' : undefined}*/}
-        {/*                                  variant="contained"*/}
-        {/*                                  disableElevation*/}
-        {/*                                  // onClick={handleClick}*/}
-        {/*                                  endIcon={<KeyboardArrowDownIcon />}*/}
-        {/*                              >*/}
-        {/*                                  Filters*/}
-        {/*                              </Button>*/}
-        {/*                          </ListItem>*/}
-        {/*                      </List>*/}
-        {/*                      <Menu*/}
-        {/*                          id="lock-menu"*/}
-        {/*                          anchorEl={anchorEl}*/}
-        {/*                          open={open}*/}
-        {/*                          onClose={handleCloseMenu}*/}
-        {/*                          MenuListProps={{*/}
-        {/*                              'aria-labelledby': 'lock-button',*/}
-        {/*                              role: 'listbox',*/}
-        {/*                          }}*/}
-        {/*                      >*/}
-        {/*                          {options.map((option, index) => (*/}
-        {/*                              <MenuItem*/}
-        {/*                                  key={option}*/}
-        {/*                                  selected={index === selectedIndex}*/}
-        {/*                                  onClick={(event) => handleMenuItemClick(event, index)}*/}
-        {/*                              >*/}
-        {/*                                  {option}*/}
-        {/*                              </MenuItem>*/}
-        {/*                          ))}*/}
-        {/*                      </Menu>*/}
-        {/*                  </div>*/}
-        {/*              </div>*/}
-        {/*          </>*/}
-        {/*      }*/}
-        {/*  />*/}
-        {/*  <CardContent>*/}
-        {/*      <div style={{ display: 'flex', height: '100%' }}>*/}
-        {/*          <div style={{ flexGrow: 1 }}>*/}
-        {/*              <Box sx={{ height: '75vh', width: '100%' }}>*/}
-        {/*                  <DataGrid*/}
-        {/*                      getRowId={(row: any) => row.job_id}*/}
-        {/*                      rows={jobsListing}*/}
-        {/*                      rowCount={jobsLength}*/}
-        {/*                      rowsPerPageOptions={[15]}*/}
-        {/*                      pagination*/}
-        {/*                      page={page}*/}
-        {/*                      pageSize={15}*/}
-        {/*                      paginationMode="server"*/}
-        {/*                      checkboxSelection={true}*/}
-        {/*                      onSelectionModelChange={(newSelectionModel) => {*/}
-        {/*                          setSelectionModel(newSelectionModel);*/}
-        {/*                      }}*/}
-        {/*                      selectionModel={selectionModel}*/}
-        {/*                      onPageChange={(newPage) => handleChange(newPage)}*/}
-        {/*                      columns={columns}*/}
-        {/*                  />*/}
-        {/*              </Box>*/}
-        {/*          </div>*/}
-        {/*      </div>*/}
-
-        {/*      /!*{jobsListing.length > 0 ? (*!/*/}
-        {/*      /!*    jobsListing.map((job) => (*!/*/}
-        {/*      /!*        <div className="card" style={{"border-radius": "10px", "margin-bottom": "5px",}}>*!/*/}
-        {/*      /!*            <div className="card-body p-1">*!/*/}
-        {/*      /!*                <div className="row px-3 justify-content-between">*!/*/}
-        {/*      /!*                    <div className="col-6">*!/*/}
-        {/*      /!*                        <h5 style={{"margin-bottom": '0px !important', color: "var(--purple)"}}>{ job['job_title'] ? job['job_title'] : '' }</h5>*!/*/}
-        {/*      /!*                    </div>*!/*/}
-        {/*      /!*                    <div className="col-2">*!/*/}
-        {/*      /!*                        <p style={{"font-size": '16px', "font-weight": "bold"}}>{ job['job_admin_status'] ? job['job_admin_status'] : '' }</p>*!/*/}
-        {/*      /!*                    </div>*!/*/}
-        {/*      /!*                    <div className="col-2">*!/*/}
-        {/*      /!*                        <p style={{"font-size": '16px', "font-weight": "bold"}}>Applicants: <span style={{color: "var(--purple)"}}>{ job['total_applicants'] ? job['total_applicants'] : '' }</span></p>*!/*/}
-        {/*      /!*                    </div>*!/*/}
-        {/*      /!*                    <div className="col-2" style={{display: 'flex', "justify-content": "flex-end"}}>*!/*/}
-        {/*      /!*                        <button*!/*/}
-        {/*      /!*                            className="btn btn-primary btn-sm"*!/*/}
-        {/*      /!*                            style={{color: "var(--light-purple)", "background-color": "var(--purple)", border: 'none'}}*!/*/}
-        {/*      /!*                            onClick={() => {showVideoPopUP(job['recruiter'] ? job['recruiter']['name'] : 'Recruiter Information', job['recruiter'])}}*!/*/}
-        {/*      /!*                        >View Recruiter</button>*!/*/}
-        {/*      /!*                    </div>*!/*/}
-        {/*      /!*                </div>*!/*/}
-        {/*      /!*            </div>*!/*/}
-        {/*      /!*        </div>*!/*/}
-        {/*      /!*    ))*!/*/}
-        {/*      /!*) : (*!/*/}
-        {/*      /!*    <>*!/*/}
-        {/*      /!*    </>*!/*/}
-        {/*      /!*)}*!/*/}
-        {/*  </CardContent>*/}
-        {/*</Card>*/}
       </div>
 
         <Popup
@@ -705,6 +561,168 @@ function Home(props) {
                     </div>
                 </div>
             </div>
+        </Popup>
+
+
+        <Popup
+            visible={jobDetailPopUp}
+            onHiding={hideJobDetailPopUP}
+            dragEnabled={false}
+            hideOnOutsideClick={true}
+            showCloseButton={false}
+            showTitle={true}
+            title={jobDetailPopUpTitle}
+            container=".dx-viewport"
+            width="60vw"
+            height="40vh"
+        >
+            <Position
+                at="center"
+                my="center"
+                of="center"
+            />
+            <ScrollView width='100%' height='100%'>
+                <div className="row">
+                    <div className="col-lg-6">
+                        <div className="dx-field">
+                            <div className="dx-field-label">Job Description</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={jobDetailPopUpData['job_description']} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <div className="dx-field">
+                            <div className="dx-field-label">Job Status</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={jobDetailPopUpData['job_admin_status']} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-4">
+                    <div className="col-lg-6">
+                        <div className="dx-field">
+                            <div className="dx-field-label">Created At</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={jobDetailPopUpData['ago']} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <div className="dx-field">
+                            <div className="dx-field-label">Updated At</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={moment(jobDetailPopUpData['updated_at']).format('yyyy-MM-DD HH:mm:ss a')} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-4">
+                    <div className="col-lg-6">
+                        <div className="row">
+                            <div className="col-lg-6">
+                                <div className="dx-field">
+                                    <div className="dx-field-label">Currency</div>
+                                    <div className="dx-field-value">
+                                        <TextBox disabled={true} value={jobDetailPopUpData['currency']} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-6">
+                                <div className="dx-field">
+                                    <div className="dx-field-label">Gender</div>
+                                    <div className="dx-field-value">
+                                        <TextBox disabled={true} value={jobDetailPopUpData['gender']} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <div className="dx-field">
+                            <div className="dx-field-label">Experience Required</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={jobDetailPopUpData['experience_req']} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row mt-4">
+                    <div className="col-lg-6">
+                        <div className="row">
+                            <div className="col-lg-6">
+                                <div className="dx-field">
+                                    <div className="dx-field-label">Applicants</div>
+                                    <div className="dx-field-value">
+                                        <TextBox disabled={true} value={jobDetailPopUpData['total_applicants']} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-6">
+                                <div className="dx-field">
+                                    <div className="dx-field-label">Vacancy</div>
+                                    <div className="dx-field-value">
+                                        <TextBox disabled={true} value={jobDetailPopUpData['vacancy']} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <div className="dx-field">
+                            <div className="dx-field-label">Salary</div>
+                            <div className="dx-field-value">
+                                <TextBox disabled={true} value={jobDetailPopUpData['salary_min'] + " - " + jobDetailPopUpData['salary_max']} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row mt-4">
+                    <div className="col-lg-6">
+                        <div className="row">
+                            <div className="col-lg-6">
+                                <div className="dx-field">
+                                    <div className="dx-field-label">Work Level</div>
+                                    <div className="dx-field-value">
+                                        <TextBox disabled={true} value={jobDetailPopUpData['work_level']} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-6">
+                                <div className="dx-field">
+                                    <div className="dx-field-label">Status</div>
+                                    <div className="dx-field-value">
+                                        <CheckBox defaultValue={jobDetailPopUpData['status'] === 1 ? true : false} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <div className="row">
+                            <div className="col-lg-6">
+                                <div className="dx-field">
+                                    <div className="dx-field-label">Approved</div>
+                                    <div className="dx-field-value">
+                                        <CheckBox defaultValue={jobDetailPopUpData['is_admin_approved'] === 1 ? true : false} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-6">
+                                <div className="dx-field">
+                                    <div className="dx-field-label">International Hiring</div>
+                                    <div className="dx-field-value">
+                                        <CheckBox defaultValue={jobDetailPopUpData['international_hiring_status'] === 1 ? true : false} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ScrollView>
         </Popup>
     </>
   );
